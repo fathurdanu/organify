@@ -13,9 +13,9 @@ class ProductController{
     }
     static async create (req, res){
         try{
-            const { name, UserId, price } = req.body
+            const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit, UserId } = req.body
             let result = await Product.create({
-                name, UserId, price
+                name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, UserId
             })
             res.status(201).json(result)
         } catch(err){
