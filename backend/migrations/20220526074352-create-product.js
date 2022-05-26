@@ -44,7 +44,7 @@ module.exports = {
       unit: {
         type: Sequelize.STRING
       },
-      UserID: {
+      UserId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
