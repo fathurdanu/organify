@@ -4,14 +4,15 @@ import Card from './components/Card'
 
 function App() {
   return (
-    <>
-      <div>Hello world</div>
+    <div className="bg-gray-500 min-h-screen">
+      <div>abaikan</div>
 
       <div>
-        {/* <Footer></Footer> */}
         <Card></Card>
+        <div className="h-10"></div>
+        <Footer></Footer>
       </div>
-    </>
+    </div>
   );
 }
 

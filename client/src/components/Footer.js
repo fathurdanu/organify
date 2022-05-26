@@ -5,7 +5,7 @@ import logo from '../assets/images/logo.png'
 function Footer() {
     return (
         <div className="text-darkColor">
-            <div className="grid p-10 md:grid-cols-3 sm:grid-cols-1 bg-lime-50">
+            <div className="grid p-10 md:grid-cols-3 sm:grid-cols-1 bg-lightColor">
                 <div className="text-2xl mx-auto mb-10">
                     <ul>
                         <li className="text-3xl font-bold">Organify</li>
