@@ -27,8 +27,8 @@ function Footer() {
                     <img className="mx-auto" src={logo} alt="logo"/>
                 </div>
             </div>
-            <div className="flex text-center text-lightColor bg-darkColor h-10">
-                <div className="m-auto">
+            <div className="flex text-center text-lightColor bg-darkColor h-14">
+                <div className="m-auto text-2xl">
                     <p>@copyright 2022 Organify</p>
                 </div>
             </div>
