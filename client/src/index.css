@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+/* development */
+div{
+  border: 1px solid red
+}
+
+
+
+/* background-color */
+
+#bg-accentColor {
+  /* kuning */
+  background-color: #FFCC1D
+} 
+
+#bg-lightColor {
+  /* putih */
+  background-color: #E8E8CC
+}  
+
+#bg-midColor {
+  /* hijau */
+  background-color: #116530
+}
+
+#bg-darkColor {
+  /* hijau tua */
+  background-color: #0B4619
+}
+
+
+/* text-color */
+
+#accentColor {
+  /* kuning */
+  background-color: #FFCC1D
+} 
+
+#lightColor {
+  /* putih */
+  background-color: #E8E8CC
+}  
+
+#midColor {
+  /* hijau */
+  background-color: #116530
+}
+
+#darkColor {
+  /* hijau tua */
+  background-color: #0B4619
+}
