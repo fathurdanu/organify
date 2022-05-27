@@ -8,7 +8,7 @@ function AddProduct() {
     return (
         <div className="mx-auto lg:w-2/5 md:w-3/5 sm:w-96 bg-white rounded-md">
             <div className="p-5">
-                <div className="py-4 text-5xl font-bold text-darkColor text-center">Add Product</div>
+                <div className="py-4 text-5xl font-bold text-darkColor text-center">Edit Product</div>
                 <hr className="border-green-800 mx-5" />
                 <div className="px-5 py-5">
                     <div className="overflow-x-scroll flex space-x-8">
@@ -73,7 +73,7 @@ function AddProduct() {
                 </div>
                 <div className="px-5 py-5">
                     <button className="text-2xl py-2 border text-lightColor hover:border-lightColor focus:border-lightColor bg-darkColor p-2 rounded-md w-full" name="condition" id="condition">
-                        Add
+                        Edit
                     </button>
                 </div>
                 
