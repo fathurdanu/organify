@@ -1,11 +1,11 @@
 import React from 'react'
 import { BiPencil } from 'react-icons/bi';
 
-function EditProfile() {
-    return (
-        <div className="mx-auto lg:w-2/5 md:w-3/5 sm:w-96 bg-white rounded-md">
+function RegisterCMS() {
+  return (
+    <div className="mx-auto lg:w-2/5 md:w-3/5 sm:w-96 bg-white rounded-md">
             <div className="p-5">
-                <div className="py-4 text-5xl font-bold text-darkColor text-center">Edit Profile</div>
+                <div className="py-4 text-2xl font-bold text-darkColor text-center">Content Management System (CMS) Registration</div>
                 <hr className="border-green-800 mx-5" />
                 <div className="px-5 py-5">
                     <div className="overflow-x-scroll flex space-x-8">
@@ -46,13 +46,13 @@ function EditProfile() {
             
                 <div className="px-5 py-8">
                     <button className="text-2xl py-2 border text-lightColor hover:border-lightColor focus:border-lightColor bg-darkColor p-2 rounded-md w-full" name="condition" id="condition">
-                        Edit
+                        Register
                     </button>
                 </div>
 
             </div>
         </div >
-    )
+  )
 }
 
-export default EditProfile
+export default RegisterCMS

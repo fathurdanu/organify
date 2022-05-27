@@ -4,7 +4,10 @@ import Card from './components/Card';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
 import EditProfile from './pages/EditProfile';
-import ProductsCMS from './pages/ProductsCMS';
+// import ProductsCMS from './pages/ProductsCMS';
+import RegisterCMS from './pages/RegisterCMS';
+import RegisterUser from './pages/RegisterUser';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -12,7 +15,9 @@ function App() {
       <div>abaikan</div>
 
       <div>
-        <ProductsCMS></ProductsCMS>
+        <Login></Login>
+        {/* <RegisterUser></RegisterUser> */}
+        {/* <RegisterCMS></RegisterCMS> */}
         {/* <AddProduct></AddProduct> */}
         {/* <EditProduct></EditProduct> */}
         {/* <EditProfile></EditProfile> */}
