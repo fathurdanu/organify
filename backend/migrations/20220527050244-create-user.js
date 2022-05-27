@@ -26,6 +26,9 @@ module.exports = {
       gender: {
         type: Sequelize.BOOLEAN
       },
+      avatar: {
+        type: Sequelize.STRING
+      },
       type: {
         type: Sequelize.STRING
       },

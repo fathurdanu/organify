@@ -1,4 +1,5 @@
 'use strict';
+const { encryptPwd } = require('../helpers/bcrypt')
 const {
   Model
 } = require('sequelize');
@@ -17,11 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    username:{
+    username: {
       type: DataTypes.STRING,
       Validate: {
         notEmpty: {
-          message:"Username must not be empty"
+          message:"User must not be empty"
         }
       }
     },
@@ -32,20 +33,34 @@ module.exports = (sequelize, DataTypes) => {
           message:"Email must not be empty"
         }
       }
-    }, 
+    },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       Validate: {
         notEmpty: {
           message:"Password must not be empty"
         }
       }
-    }, 
+    },
     salt: DataTypes.INTEGER,
     birthday: DataTypes.DATE,
     gender: DataTypes.BOOLEAN,
-    type: DataTypes.STRING
+    avatar: DataTypes.STRING,
+    type: {
+      type: DataTypes.STRING,
+      Validate: {
+        notEmpty: {
+          message:"Type must not be empty"
+        }
+      }
+    },
   }, {
+    hooks: {
+      beforeCreate: function( user, options) {
+        user.password = encryptPwd(user.password)
+        //user.avatar = user.avatar || ('../images/ppdefault.jpg')
+      }
+    },
     sequelize,
     modelName: 'User',
   });

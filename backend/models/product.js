@@ -18,9 +18,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      Validate: {
+        notEmpty: {
+          message:"Type must not be empty"
+        }
+      }
+    },
     desc: DataTypes.TEXT,
-    price: DataTypes.INTEGER,
+    price: {
+      type: DataTypes.INTEGER,
+      Validate: {
+        notEmpty: {
+          message:"Price must not be empty"
+        }
+      }
+    },
     stock: DataTypes.INTEGER,
     expire: DataTypes.DATE,
     weight: DataTypes.INTEGER,
@@ -30,7 +44,14 @@ module.exports = (sequelize, DataTypes) => {
     rating: DataTypes.INTEGER,
     views: DataTypes.INTEGER,
     unit: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
+      Validate: {
+        notEmpty: {
+          message:"User Id must not be empty"
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Product',

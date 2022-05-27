@@ -4,6 +4,7 @@ class OrderController{
     static async getAllOrders (req, res){
         try{
             let orders = await LineItem.findAll({
+                include : Product
             })
             res.status(200).json(orders)
         } catch(err){
@@ -26,13 +27,12 @@ class OrderController{
         try{
             const { OrderId, UserId, qty, ProductId, price } = req.body
             let result = await LineItem.create({
+                    include : Product,
                     OrderId,
                     ProductId,
                     qty
                 })
-            // let searchProduct = await Product.findOne({   
-            //      }, {where: { Id : result.ProductId}
-            // })
+            console.log([result.Product])
             // const subtotal = result.qty*Product.price
             // let updateOrder = await Order.update({
             //     subtotal: subtotal
