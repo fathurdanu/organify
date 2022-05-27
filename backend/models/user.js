@@ -44,10 +44,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     salt: DataTypes.INTEGER,
     birthday: DataTypes.DATE,
-    gender: DataTypes.BOOLEAN,
+    gender: {
+      type: DataTypes.BOOLEAN,
+      values: [true, false]
+    },
     avatar: DataTypes.STRING,
     type: {
       type: DataTypes.STRING,
+      values: ['Admin','Customer'],
       Validate: {
         notEmpty: {
           message:"Type must not be empty"
@@ -59,6 +63,10 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate: function( user, options) {
         user.password = encryptPwd(user.password)
         //user.avatar = user.avatar || ('../images/ppdefault.jpg')
+        user.salt = Math.floor(Math.random()*10)+1;
+      },
+      beforeUpdate: function( user, options) {
+        user.password = encryptPwd(user.password)
       }
     },
     sequelize,
