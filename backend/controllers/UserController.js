@@ -16,7 +16,8 @@ class UserController{
 
     static async register (req, res){
         try{
-            const { username, email, password, birthday, gender, avatar, type} = req.body
+            const avatar =  req.file.filename
+            const { username, email, password, birthday, gender, type} = req.body
             let result = await User.create({
                 username, email, password, birthday, gender, avatar, type
             })

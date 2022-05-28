@@ -1,4 +1,4 @@
-const { Product, User, Order, ShoppingCart } = require('../models')
+const { Product, User, ProductImage } = require('../models')
 
 class ProductController{
     static async getAllProducts (req, res){
@@ -15,13 +15,20 @@ class ProductController{
     static async create (req, res){
         try{
             const id = req.userData.id
+            const imagenames = req.files.filename
             const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
             
-            let result = await Product.create({
+            let result = Product.create({
                 name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, 
                 UserId:id
             })
-            res.status(201).json(result)
+            imagenames.forEach(imagenames => {
+                let image = ProductImage.create({
+                    filename:imagenames,
+                    ProductId:result.id
+                })
+            });
+            res.status(201).json(image)
         } catch(err){
             res.status(500).json(err)
         }
