@@ -18,7 +18,7 @@ class ProductController{
             const imagenames = req.files.filename
             const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
             
-            let result = Product.create({
+            let result = await Product.create({
                 name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, 
                 UserId:id
             })
