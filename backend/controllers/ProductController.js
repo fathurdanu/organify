@@ -11,16 +11,45 @@ class ProductController{
             res.status(500).json(err)
         }
     }
+    //just for admin
     static async create (req, res){
         try{
-            const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit, UserId } = req.body
+            const id = req.userData.id
+            const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
+            
             let result = await Product.create({
-                name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, UserId
+                name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, 
+                UserId:id
             })
             res.status(201).json(result)
         } catch(err){
             res.status(500).json(err)
         }
+    }
+    //just for admin
+    static async update (req, res){
+        try{
+            const id = req.params.id
+            const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
+            let result = await Product.create({
+                name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit,
+                where:{ id }
+            })
+            res.status(201).json(result)
+        } catch(err){
+            res.status(500).json(err)
+        }
+    }
+    static async getProductById (req, res){
+        const id = req.params.id
+        try{
+            let result = await Product.findByPk({
+                where: { id }
+            })
+            res.status(201).json(result)
+        } catch(err){
+            res.status(500).json(err)
+        }   
     }
 }
 

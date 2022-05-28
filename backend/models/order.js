@@ -40,6 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
   }, {
+    hooks: {
+      beforeCreate: function( product, options) {
+       product.tax=10;
+       }
+    },
     sequelize,
     modelName: 'Order',
   });

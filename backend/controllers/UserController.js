@@ -6,7 +6,7 @@ class UserController{
     static async getAllUsers (req, res){
         try{
             let users = await User.findAll({
-                include : [ Order, ShoppingCart]
+                // include : [ Order, ShoppingCart]
             })
             res.status(200).json(users)
         } catch(err){
@@ -19,6 +19,10 @@ class UserController{
             const { username, email, password, birthday, gender, avatar, type} = req.body
             let result = await User.create({
                 username, email, password, birthday, gender, avatar, type
+            })
+            await ShoppingCart.create({
+                UserId: result.id,
+                status: "open"
             })
             res.status(201).json(result)
         } catch(err){
@@ -47,6 +51,31 @@ class UserController{
                     message:`User not found`
                 })
             }
+        } catch(err) {
+            res.status(500).json(err)
+        }
+    }
+    static async update (req, res){
+        try{
+            const id = +req.userData.id
+            const { username, email, password, birthday, gender, avatar, type} = req.body
+
+            let result = await User.update({
+                username, email, password, birthday, gender, avatar, type,
+                where: { id }
+            })
+            res.status(201).json(result)
+        } catch(err) {
+            res.status(500).json(err)
+        }
+    }
+    static async getUserById (req, res) {
+        try{
+            const id = +req.userData.id
+            let result = await User.findOne({
+                where: { id },
+            })
+            res.status(200).json(result)
         } catch(err) {
             res.status(500).json(err)
         }

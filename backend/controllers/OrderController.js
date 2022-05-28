@@ -1,10 +1,11 @@
 const { Product, Order, LineItem } = require('../models')
 
 class OrderController{
+    //hanya untuk admin
     static async getAllOrders (req, res){
         try{
             let orders = await Order.findAll({
-                // include : Product
+                include : Product
             })
             res.status(200).json(orders)
         } catch(err){
@@ -13,64 +14,117 @@ class OrderController{
     }
     static async create (req, res){
         try{
-            const { OrderId, UserId, qty, ProductId } = req.body
+            const id = +req.userData.id
+            const { qty, ProductId } = req.body
+            //buat table order
             let result = await Order.create({
-                UserId
+                UserId : id
             })
-            await LineItem.create({
-                OrderId,
+            //membuat table line item dimana OrderId sama dengan id dari table order yang telah dibuat diatas
+            let resultLine = await LineItem.create({
+                OrderId: result.id,
                 ProductId,
-                qty
+                qty,
+                status:'order'
             })
+            //cari data line item dimana OrderId sama dengan id di table order yang dibuat diatas
             let resultGet = await LineItem.findOne({
-                include: Product
-            },{where: {id:ProductId}})
+                include: [Product, Order],
+                where: {OrderId:resultLine.OrderId}
+            })
 
+            //mengambil data price di table product yang telah dicari diatas
             let tempPrice = resultGet.Product.price
+            //mengambil data qty di table product yang telah dicari diatas
             let tempQty = resultGet.qty
-            let total = tempPrice * tempQty
-            if (qty>2){
-                let tempDiscount = total * 0.1
-            } 
+            // menghitung subtotal yaitu price dikali qty
+            let tempsubtotal = tempPrice * tempQty
+
+            // menghitung discount berdasarkan jumlah qty
+            let tempDiscount
+            if ( resultGet.qty > 2 ){
+                tempDiscount = (tempsubtotal * 5) / 100
+            } else{
+                tempDiscount = 0
+            }
+
+            //mengambil data tax di table product yang telah dicari diatas
+            let tempTax = resultGet.Order.tax
+            //menghitung tax yaitu subtotal dikali 10 % 
+            let tempTotalTax = (tempsubtotal * tempTax) /100
+            // menghitung totalDue yaitu subtotal - discount + tax
+            let totalDue = tempsubtotal - tempDiscount + tempTotalTax
+
+            //update table order masukan data-data yang telah dihitung diatas
             let resultUpdate = await Order.update({
-                subtotal: total,
-                discount : tempDiscount
+                subtotal: tempsubtotal,
+                discount : tempDiscount,
+                totalDue : totalDue,
+                totalQty : tempQty,
+                status: "unpaid",
             },{where: {id:resultGet.OrderId}})
 
-            console.log(total)
-            console.log(tempPrice)
-            console.log(tempqty)
-            res.status(201).json(resultUpdate)
+            let resultt = await Order.findOne({
+                where: {id:resultLine.OrderId}
+            })
+            res.status(201).json(resultt)
         } catch(err){
             res.status(500).json(err)
         }
     }
- 
-    // static async checkout (req, res){
-    //     try{
-            //  const { OrderId, UserId, qty, ProductId, price } = req.body
-            // let result = await LineItem.create({
-            //         include : Product,
-            //         OrderId,
-            //         ProductId,
-            //         qty
-            //     })
-    //         console.log([result.Product])
-    //         // const subtotal = result.qty*Product.price
-    //         // let updateOrder = await Order.update({
-    //         //     subtotal: subtotal
-    //         // },{where:
-    //         //     {OrderId : result.OrderId}
-    //         // })
-    //         // console.log(updateOrder)
-    //         // console.log(subtotal)
-    //         // console.log(searchProduct)
-    //         res.status(201).json(result)
-    //     } catch(err){
-    //         res.status(500).json(err)
-    //     }
-    // }
-    // static
+    //update setelah pembayaran
+    static async updatePayment (req, res) {
+        const id = +req.userData.id
+        const { paymentTrasaction } = req.body
+        try {
+            let order = await Order.findOne({
+                where: {UserId:id, status:'unpaid'}
+            })
+            let result = await Order.update({
+                paymentTrasaction,
+                status: 'paid'
+            }, {
+                where: {id:order.id}
+              })
+            res.status(201).json(result)
+        } catch(err){
+            res.status(500).json(err)
+        }
+    }
+    //update jika pembatalan order
+    static async cancel (req, res) {
+        const id = +req.userData.id
+        //const { status } = +req.body
+        let result = await Order.update({
+            status : 'cancel'
+        }, {
+            where: {UserId:id, status:'unpaid'}
+          })
+        res.status(201).json(result)
+        } catch(err){
+        res.status(500).json(err)
+    }
+    //mengambil data semua order berdasarkan user id di access token
+    static async orderByUserId (req, res) {
+        const id = +req.userData.id
+        let result = await Order.findAll({
+            where: {UserId:id}
+          })
+        res.status(201).json(result)
+        } catch(err){
+        res.status(500).json(err)
+    }
+    //mengambil data order yang belum dibayar dan user id di access token
+    static async orderUnpaid (req, res) {
+        const id = +req.userData.id
+        let result = await Order.findOne({
+        }, {
+            where: {UserId:id, status:'unpaid'}
+        })
+        res.status(201).json(result)
+        } catch(err){
+        res.status(500).json(err)
+    }
 }
 
 module.exports = OrderController
