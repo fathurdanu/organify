@@ -8,8 +8,8 @@ const ProfileCMS = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <div class="flex">
-        <div class="h-screen w-2/4">
+      <div class="grid md:grid-cols-12 sm:grid-cols-1">
+        <div class="md:col-span-6 sm:col-span-12 sm:min-h-screen mx-auto">
           <div class="flex">
             <h1 class="text-xl font-semibold pt-10 pb-5">Store Profile</h1>
             <div class="pt-10 pl-48">
@@ -59,8 +59,8 @@ const ProfileCMS = () => {
             </div>
           </div>
         </div>
-        <div class="border border-gray-300 m-5" />
-        <div class="h-screen w-full">
+        <div class="border-r w-5 border-gray-300 m-5" />
+        <div class=" md:col-span-5 sm:col-span-12 overflow-scroll no-scrollbar p-5">
           <h1 class="text-xl font-semibold pt-10 pb-5 text-center">
             Store Description
           </h1>

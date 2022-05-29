@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import CMSRoute from "./CMSRoute";
+import SideBarCMS from "../components/SideBarCMS";
 import UserRoute from "./UserRoute";
 
 import Login from "../pages/Login";
@@ -14,7 +14,7 @@ const MainRoute = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/registerUser" element={<RegisterUser />}></Route>
       <Route path="/registerCMS" element={<RegisterCMS />}></Route>
-      <Route path="/cms/*" element={<CMSRoute />}></Route>
+      <Route path="/cms/*" element={<SideBarCMS />}></Route>
       <Route path="/user/*" element={<UserRoute />}></Route>
     </Routes>
   );
