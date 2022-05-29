@@ -1,0 +1,12 @@
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #116530;
+}
