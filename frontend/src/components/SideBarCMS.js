@@ -67,77 +67,12 @@ function SideBarCMS() {
                     </div>
                 </div>
             </aside>
-            <main className="mx-auto w-full min-h-screen bg-neutral-200">
+            <main className="mx-auto w-full">
                 <div className="container mx-auto">
                     <CMSRoute />
                 </div>
             </main>
         </div>
-
-
-
-        // <div class="flex overflow-hidden h-screen">
-        //     <aside class={`flex grid-cols-2 w-96 h-full py-8 border-r duration-300 ${showDashboard ? 'translate-x-0' : '-translate-x-full'}`}>
-        //         <div class="bg-darkColor h-full">
-        //             <div>
-        //                 <h2 class="text-3xl font-semibold text-center text-lightColor">
-        //                     Organify
-        //                 </h2>
-        //                 <h4 class="text-lg font-semibold text-center mt-2 text-lightColor">
-        //                     <em>Admin Dashboard</em>
-        //                 </h4>
-        //             </div>
-
-        //             <div class="flex flex-col justify-between mt-6">
-        //                 <aside>
-        //                     <ul class="my-2">
-        //                         <li class="my-2">
-        //                             <button
-        //                                 class="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
-        //                                 onClick={() => navigate("/cms/dashboard")}
-        //                             >
-        //                                 <GiFruitBowl size={25} />
-        //                                 <span class="mx-4 font-medium">Products</span>
-        //                             </button>
-        //                         </li>
-
-        //                         <li class="my-2">
-        //                             <button
-        //                                 class="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
-        //                                 onClick={() => navigate("/cms/profile")}
-        //                             >
-        //                                 <CgProfile size={25} />
-        //                                 <span class="mx-4 font-medium">Profile</span>
-        //                             </button>
-        //                         </li>
-
-        //                         <li class="my-2 absolute bottom-5">
-        //                             <button
-        //                                 class="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
-        //                                 onClick={() => navigate("/login")}
-        //                             >
-        //                                 <BiLogOut size={25} />
-        //                                 <span class="mx-4 font-medium">Logout</span>
-        //                             </button>
-        //                         </li>
-        //                     </ul>
-        //                 </aside>
-        //             </div>
-        //         </div>
-        //         <div class="flex justify-center items-center h-full duration-300">
-        //             <button
-        //                 class="p-3 bg-darkColor text-lightColor rounded"
-        //                 onClick={() => setShowDashboard(!showDashboard)}
-        //             >
-        //                 |||
-        //             </button>
-        //         </div>
-        //     </aside>
-
-        //     <div class="w-full max-h-full">
-        //         <CMSRoute />
-        //     </div>
-        // </div>
     )
 }
 
