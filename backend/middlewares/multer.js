@@ -10,10 +10,4 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({storage: fileStorageEngine})
 
-
-// app.post('/multi', upload.array('images'), (req, res) => {
-//     console.log(req.files)
-//     res.send("success")
-// })
-
 module.exports = upload

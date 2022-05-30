@@ -33,12 +33,8 @@ class OrderController{
                 where: {OrderId:resultLine.OrderId}
             })
 
-            //mengambil data price di table product yang telah dicari diatas
-            let tempPrice = resultGet.Product.price
-            //mengambil data qty di table product yang telah dicari diatas
-            let tempQty = resultGet.qty
             // menghitung subtotal yaitu price dikali qty
-            let tempsubtotal = tempPrice * tempQty
+            let tempsubtotal = resultGet.Product.price * resultGet.qty
 
             // menghitung discount berdasarkan jumlah qty
             let tempDiscount
@@ -48,10 +44,8 @@ class OrderController{
                 tempDiscount = 0
             }
 
-            //mengambil data tax di table product yang telah dicari diatas
-            let tempTax = resultGet.Order.tax
             //menghitung tax yaitu subtotal dikali 10 % 
-            let tempTotalTax = (tempsubtotal * tempTax) /100
+            let tempTotalTax = (tempsubtotal * resultGet.Order.tax) /100
             // menghitung totalDue yaitu subtotal - discount + tax
             let totalDue = tempsubtotal - tempDiscount + tempTotalTax
 
@@ -60,14 +54,11 @@ class OrderController{
                 subtotal: tempsubtotal,
                 discount : tempDiscount,
                 totalDue : totalDue,
-                totalQty : tempQty,
+                totalQty : resultGet.qty,
                 status: "unpaid",
             },{where: {id:resultGet.OrderId}})
 
-            let resultt = await Order.findOne({
-                where: {id:resultLine.OrderId}
-            })
-            res.status(201).json(resultt)
+            res.status(201).json(resultUpdate)
         } catch(err){
             res.status(500).json(err)
         }
@@ -85,7 +76,15 @@ class OrderController{
                 status: 'paid'
             }, {
                 where: {id:order.id}
-              })
+            })
+            let line = await LineItem.findOne({
+                where: {OrderId:result.id}
+            })
+            let produk = await Produk.update({
+                stock:stock-line.qty,
+                totalSold:totalSold+line.qty,
+                where:{id:line.ProductId}
+            })
             res.status(201).json(result)
         } catch(err){
             res.status(500).json(err)

@@ -15,20 +15,18 @@ class ProductController{
     static async create (req, res){
         try{
             const id = req.userData.id
-            const imagenames = req.files.filename
+            const imagenames = req.files.
+            imagenames.forEach(imagename=> {
+                console.log(imagenames.filename)
+            })
             const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
             
-            let result = await Product.create({
-                name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, 
-                UserId:id
-            })
-            imagenames.forEach(imagenames => {
-                let image = ProductImage.create({
-                    filename:imagenames,
-                    ProductId:result.id
-                })
-            });
-            res.status(201).json(image)
+            // let result = await Product.create({
+            //     name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit, 
+            //     UserId:id
+            // })
+            console.log(imagenames)
+            res.status(201).json(result)
         } catch(err){
             res.status(500).json(err)
         }
@@ -36,9 +34,9 @@ class ProductController{
     //just for admin
     static async update (req, res){
         try{
-            const id = req.params.id
+            const id = +req.params.id
             const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
-            let result = await Product.create({
+            let result = await Product.update({
                 name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit,
                 where:{ id }
             })
@@ -48,9 +46,9 @@ class ProductController{
         }
     }
     static async getProductById (req, res){
-        const id = req.params.id
+        const id = +req.params.id
         try{
-            let result = await Product.findByPk({
+            let result = await Product.findOne({
                 where: { id }
             })
             res.status(201).json(result)
