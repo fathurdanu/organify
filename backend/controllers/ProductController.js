@@ -35,9 +35,9 @@ class ProductController{
     static async update (req, res){
         try{
             const id = +req.params.id
-            const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
+            const { name, desc, price, stock, expire, weight, category, condition, totalSold,  unit} = req.body
             let result = await Product.update({
-                name, desc, price, stock, stock, expire, weight, category, condition, totalSold, rating, views, unit,
+                name, desc, price, stock, stock, expire, weight, category, condition, totalSold,  unit,
                 where:{ id }
             })
             res.status(201).json(result)
@@ -50,6 +50,10 @@ class ProductController{
         try{
             let result = await Product.findOne({
                 where: { id }
+            })
+            let views = await Product.update({
+                views: views  + 1,
+                where: {id:result.id}
             })
             res.status(201).json(result)
         } catch(err){
