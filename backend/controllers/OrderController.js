@@ -1,4 +1,4 @@
-const { Product, Order, LineItem } = require('../models')
+const { Product, Order, LineItem, ShoppingCart } = require('../models')
 
 class OrderController{
     //hanya untuk admin
@@ -86,6 +86,7 @@ class OrderController{
             }, {
                 where: {id:order.id}
               })
+            
             res.status(201).json(result)
         } catch(err){
             res.status(500).json(err)
@@ -96,7 +97,7 @@ class OrderController{
         const id = +req.userData.id
         //const { status } = +req.body
         let result = await Order.update({
-            status : 'cancel'
+            status : 'canceled'
         }, {
             where: {UserId:id, status:'unpaid'}
           })
@@ -108,6 +109,8 @@ class OrderController{
     static async orderByUserId (req, res) {
         const id = +req.userData.id
         let result = await Order.findAll({
+            include : Product
+        },{
             where: {UserId:id}
           })
         res.status(201).json(result)

@@ -94,6 +94,12 @@ class ShoppingCartController{
                 OrderId: order.id,
             },{where:{ShoppingCartId:shoppingCart.id}})
 
+            await ShoppingCart.update({
+                status: 'close'
+            }, {
+                where: {status:'open',UserId:id}
+            })
+
             res.status(201).json(update)
         } catch (err) {
             res.status(500).json(err)
