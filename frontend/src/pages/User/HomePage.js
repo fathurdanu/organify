@@ -1,25 +1,24 @@
 import React from "react";
-import Header from "../../components/Header";
 import CarouselComponent from "../../components/CarouselComponent";
-import CategoryCard from "../../components/CategoryCard";
-import CardContainer from "../../components/CardContainer";
+import ProductFilter from "../../components/ProductFilter";
+import CardContainerUser from "../../components/CardContainerUser";
 
 const HomePage = () => {
   return (
     <div className="mx-auto md:container">
-      <div class="py-3">
+      <div className="py-3">
         <CarouselComponent />
       </div>
       <div>
         <div>
-          <h1 class="font-bold text-xl mt-3">Choose from these categories</h1>
+          <h1 className="font-bold text-xl mt-3">Choose from these categories</h1>
         </div>
-        <div class="py-3">
-          <CategoryCard />
+        <div className="py-3">
+          <ProductFilter />
         </div>
       </div>
-      <div class="my-3">
-        <CardContainer />
+      <div className="my-3">
+        <CardContainerUser />
       </div>
     </div>
   );

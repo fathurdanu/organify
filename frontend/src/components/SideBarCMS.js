@@ -18,38 +18,38 @@ function SideBarCMS() {
                             Organify
                         </div>
                         <div className=" text-lg h-2/12 font-semibold text-center mt-2 text-lightColor">
-                            <em>Cart</em>
+                            <em>Admin Dashboard</em>
                         </div>
                     </div>
                     <div className="mx-auto flex">
-                        <ul class="my-2">
-                            <li class="my-2">
+                        <ul className="my-2">
+                            <li className="my-2">
                                 <button
-                                    class="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
+                                    className="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
                                     onClick={() => navigate("/cms/dashboard")}
                                 >
                                     <GiFruitBowl size={25} />
-                                    <span class="mx-4 font-medium">Products</span>
+                                    <span className="mx-4 font-medium">Products</span>
                                 </button>
                             </li>
 
-                            <li class="my-2">
+                            <li className="my-2">
                                 <button
-                                    class="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
+                                    className="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
                                     onClick={() => navigate("/cms/profile")}
                                 >
                                     <CgProfile size={25} />
-                                    <span class="mx-4 font-medium">Profile</span>
+                                    <span className="mx-4 font-medium">Profile</span>
                                 </button>
                             </li>
 
-                            <li class="my-2 absolute bottom-5">
+                            <li className="my-2 absolute bottom-5">
                                 <button
-                                    class="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
+                                    className="flex items-center px-4 py-2 text-lightColor bg-darkColor hover:bg-lightColor hover:text-darkColor rounded-md "
                                     onClick={() => navigate("/login")}
                                 >
                                     <BiLogOut size={25} />
-                                    <span class="mx-4 font-medium">Logout</span>
+                                    <span className="mx-4 font-medium">Logout</span>
                                 </button>
                             </li>
                         </ul>
@@ -59,7 +59,7 @@ function SideBarCMS() {
                 <div className="w-1/4 flex justify-center items-center max-h-screen">
                     <div className="h-14 w-14 bg-darkColor rounded-full flex justify-center items-center">
                         <button
-                            class="h-12 w-12 bg-lightColor text-darkColor text-2xl flex justify-center items-center rounded-full"
+                            className="h-12 w-12 bg-lightColor text-darkColor text-2xl flex justify-center items-center rounded-full"
                             onClick={() => setShowDashboard(!showDashboard)}
                         >
                             |||

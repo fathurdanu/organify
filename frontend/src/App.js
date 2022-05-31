@@ -3,7 +3,7 @@ import MainRoute from "./Routes/MainRoute";
 
 function App() {
   return (
-    <div class="min-h-screen bg-neutral-200">
+    <div className="bg-neutral-200">
       <MainRoute />
     </div>
   );

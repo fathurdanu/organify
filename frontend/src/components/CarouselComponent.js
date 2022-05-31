@@ -33,9 +33,9 @@ const CarouselComponent = () => {
         {dummyImg.map((img) => {
           return (
             <div>
-              <img src={img.image} style={{ maxHeight: "80vh" }}></img>
+              <img alt="" src={img.image} style={{ maxHeight: "80vh" }}></img>
               <p
-                class="legend"
+                className="legend"
                 style={{
                   padding: 10,
                   backgroundColor: "rgba(255, 255, 255, 0.81)",

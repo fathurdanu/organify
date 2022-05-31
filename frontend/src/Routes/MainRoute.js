@@ -1,12 +1,12 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import SideBarCMS from "../components/SideBarCMS";
 import UserRoute from "./UserRoute";
 
 import Login from "../pages/Login";
 import { RegisterUser } from "../pages/User";
 import { RegisterCMS } from "../pages/CMS";
+import SideBarCMS from "../components/SideBarCMS";
 const MainRoute = () => {
   return (
     <Routes>

@@ -14,15 +14,15 @@ function AddProduct() {
         <hr className="border-green-800 mx-5" />
         <div className="px-5 py-5">
           <div className="overflow-x-scroll flex space-x-8">
-            {data.map((product) => {
+            {data.map((product,index) => {
               return (
-                <div class="flex-shrink-0 my-5 w-36 h-36 bg-white shadow-gray-600 relative overflow-hidden rounded-md shadow-md cursor-pointer">
+                <div key={index} className="flex-shrink-0 my-5 w-36 h-36 bg-white shadow-gray-600 relative overflow-hidden rounded-md shadow-md cursor-pointer">
                   <img
-                    class="object-cover w-full"
+                    className="object-cover w-full"
                     src="https://media.istockphoto.com/photos/banana-bunch-picture-id173242750?b=1&k=20&m=173242750&s=170667a&w=0&h=oRhLWtbAiPOxFAWeo2xEeLzwmHHm8W1mtdNOS7Dddd4="
                     alt="Flower and sky"
                   />
-                  <div class="absolute top-0 left-0 px-2 py-2">
+                  <div className="absolute top-0 left-0 px-2 py-2">
                     <div className="text-2xl">
                       <BiPencil />
                     </div>
