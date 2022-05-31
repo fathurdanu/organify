@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          message: "User must not be empty"
+          msg: "User must not be empty"
         }
       }
     },
@@ -32,9 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          message: "Email must not be empty"
+          msg: "Email must not be empty"
         },
-        isEmail: true
+        isEmail: {
+          msg: "Use the email format"
+        },
       }
     },
     password: {
@@ -42,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          message: "Password must not be empty"
+          msg: "Password must not be empty"
         }
       }
     },
@@ -59,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       values: ['Admin', 'Customer'],
       validate: {
         notEmpty: {
-          message: "Type must not be empty"
+          msg: "Type must not be empty"
         }
       }
     },

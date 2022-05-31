@@ -1,18 +1,18 @@
 const { Product, User, ProductImage } = require('../models')
 
 class ProductController{
-    static async getAllProducts (req, res){
+    static async getAllProducts (req, res, next){
         try{
             let products = await Product.findAll({
                 include : User
             })
             res.status(200).json(products)
         } catch(err){
-            res.status(500).json(err)
+            next(err)
         }
     }
     //just for admin
-    static async create (req, res){
+    static async create (req, res, next){
         try{
             const id = req.userData.id
             const imagenames = req.files
@@ -36,11 +36,11 @@ class ProductController{
             });
             res.status(201).json(result);
         } catch(err){
-            res.status(500).json(err)
+            next(err)
         }
     }
     //just for admin
-    static async update (req, res){
+    static async update (req, res, next){
         try{
             const id = req.params.id
             const { name, desc, price, stock, expire, weight, category, condition, totalSold, rating, views, unit} = req.body
@@ -51,10 +51,10 @@ class ProductController{
             })
             res.status(201).json(result)
         } catch(err){
-            res.status(500).json(err)
+            next(err)
         }
     }
-    static async getProductById (req, res){
+    static async getProductById (req, res, next){
         const id = req.params.id
         try{
             let result = await Product.findByPk(id,{
@@ -62,7 +62,7 @@ class ProductController{
             });
             res.status(201).json(result)
         } catch(err){
-            res.status(500).json(err)
+            next(err)
         }   
     }
 }

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       validate: {
         notEmpty: {
-          message:"Primary must not be empty"
+          msg:"Primary must not be empty"
         }
       }
     }, 
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          message:"Product Id must not be empty"
+          msg:"Product Id must not be empty"
         }
       }
     }, 

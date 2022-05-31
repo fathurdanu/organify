@@ -1,17 +1,17 @@
 const { ShoppingCart, User, LineItem, Product, Order } = require('../models')
 
 class ShoppingCartController{
-    static async getAllShoppingCarts (req, res){
+    static async getAllShoppingCarts (req, res, next){
         try{
             let carts = await ShoppingCart.findAll({
                 include : User
             })
             res.status(200).json(carts)
         } catch(err){
-            res.status(500).json(err)
+            next(err)
         }
     }
-    static async getCartByUserId (req,res){
+    static async getCartByUserId (req,res, next){
         const id= +req.userData.id
         try {
             let getCart = await ShoppingCart.findAll({
@@ -19,10 +19,10 @@ class ShoppingCartController{
             })
             res.status(200).json(getCart)
         } catch(err){
-            res.status(500).json(err)
+            next(err)
         }
     }
-    static async addToCart(req, res) {
+    static async addToCart(req, res, next) {
         try {
             const id = +req.userData.id
             const {  qty, ProductId } = req.body;
@@ -41,10 +41,10 @@ class ShoppingCartController{
             })
             res.status(201).json(result)
         } catch (err) {
-            res.status(500).json(err)
+            next(err)
         }
     }
-    static async checkout(req, res) {
+    static async checkout(req, res, next) {
         try {
             const id = +req.userData.id
             
@@ -102,7 +102,7 @@ class ShoppingCartController{
 
             res.status(201).json(update)
         } catch (err) {
-            res.status(500).json(err)
+            next(err)
         }
     }
 }

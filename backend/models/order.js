@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: {
-          message:"Status must not be empty"
+          msg:"Status must not be empty"
         }
       }
     },
@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       validate: {
         notEmpty: {
-          message:"UserId must not be empty"
+          msg:"UserId must not be empty"
         }
       }
     },
