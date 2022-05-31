@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     paymentTrasaction: DataTypes.STRING,
     status: {
       type: DataTypes.STRING,
-      Validate: {
+      validate: {
         notEmpty: {
           message:"Status must not be empty"
         }
@@ -33,13 +33,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: {
       type: DataTypes.INTEGER,
-      Validate: {
+      validate: {
         notEmpty: {
           message:"UserId must not be empty"
         }
       }
     },
   }, {
+    hooks: {
+      beforeCreate: function( product, options) {
+       product.tax=10;
+       }
+    },
     sequelize,
     modelName: 'Order',
   });

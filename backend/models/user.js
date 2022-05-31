@@ -19,46 +19,61 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     username: {
+      allowNull: false,
       type: DataTypes.STRING,
-      Validate: {
+      validate: {
         notEmpty: {
-          message:"User must not be empty"
+          message: "User must not be empty"
         }
       }
     },
     email: {
+      allowNull: false,
       type: DataTypes.STRING,
-      Validate: {
+      validate: {
         notEmpty: {
-          message:"Email must not be empty"
-        }
+          message: "Email must not be empty"
+        },
+        isEmail: true
       }
     },
     password: {
+      allowNull: false,
       type: DataTypes.INTEGER,
-      Validate: {
+      validate: {
         notEmpty: {
-          message:"Password must not be empty"
+          message: "Password must not be empty"
         }
       }
     },
     salt: DataTypes.INTEGER,
     birthday: DataTypes.DATE,
-    gender: DataTypes.BOOLEAN,
+    gender: {
+      type: DataTypes.BOOLEAN,
+      values: [true, false]
+    },
     avatar: DataTypes.STRING,
     type: {
       type: DataTypes.STRING,
-      Validate: {
+      allowNull: false,
+      values: ['Admin', 'Customer'],
+      validate: {
         notEmpty: {
-          message:"Type must not be empty"
+          message: "Type must not be empty"
         }
       }
     },
   }, {
     hooks: {
-      beforeCreate: function( user, options) {
-        user.password = encryptPwd(user.password)
+      beforeCreate: function (user, options) {
+        user.salt = Math.floor(Math.random() * 10) + 1;
+        user.password = encryptPwd(user.password, user.salt)
         //user.avatar = user.avatar || ('../images/ppdefault.jpg')
+
+      },
+      beforeUpdate: function (user, options) {
+        user.salt = Math.floor(Math.random() * 10) + 1;
+        user.password = encryptPwd(user.password, user.salt)
       }
     },
     sequelize,

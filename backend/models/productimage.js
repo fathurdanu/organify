@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     fileType: DataTypes.STRING,
     primary: {
       type: DataTypes.BOOLEAN,
-      Validate: {
+      validate: {
         notEmpty: {
           message:"Primary must not be empty"
         }
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     ProductId: {
       type: DataTypes.INTEGER,
-      Validate: {
+      validate: {
         notEmpty: {
           message:"Product Id must not be empty"
         }

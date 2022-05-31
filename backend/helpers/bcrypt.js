@@ -1,8 +1,7 @@
 const bcrypt = require('bcrypt')
-const saltRound = 7;
 
-const encryptPwd = data => {
-    return bcrypt.hashSync(String(data), saltRound)
+const encryptPwd = (data,salt) => {
+    return bcrypt.hashSync(String(data), salt)
 }
 
 const decryptPwd = (data, hashPwd) => {

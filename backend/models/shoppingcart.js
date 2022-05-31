@@ -17,17 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ShoppingCart.init({
-    UserId: {
-      type: DataTypes.INTEGER,
-      Validate: {
-        notEmpty: {
-          message:"User Id must not be empty"
-        }
-      }
-    },
-    status: {
-      type: DataTypes.STRING //tambahan
-    },
+    status: DataTypes.STRING,
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'ShoppingCart',

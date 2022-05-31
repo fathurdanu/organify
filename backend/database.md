@@ -9,9 +9,10 @@ npx sequelize-cli model:generate --name ProductImage --attributes filename:strin
 
 npx sequelize-cli model:generate --name Order --attributes subtotal:integer,discount:integer,tax:integer,totalDue:integer,totalQty:integer,paymentTrasaction:string,status:string,UserId:integer
 
-npx sequelize-cli model:generate --name ShoppingCart --attributes UserId:integer
+npx sequelize-cli model:generate --name ShoppingCart --attributes status:string,UserId:integer
 
 npx sequelize-cli model:generate --name LineItem --attributes qty:integer,status:string,ProductId:integer,ShoppingCartId:integer,OrderId:integer
+
 
 
 

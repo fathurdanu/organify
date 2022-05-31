@@ -25,11 +25,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'LineItem',
-    hooks:{
-      beforeCreate: function( lineItem, options) {
-        lineItem.status = "cart"
-      }
-    }
   });
   return LineItem;
 };

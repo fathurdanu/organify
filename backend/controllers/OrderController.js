@@ -1,100 +1,130 @@
-const { Product, Order, LineItem, ShoppingCart } = require('../models')
+const { Product, Order, LineItem } = require('../models')
 
-class OrderController {
-    static async getAllOrders(req, res) {
-        try {
-            let orders = await LineItem.findAll({
-                include: Product
+class OrderController{
+    //hanya untuk admin
+    static async getAllOrders (req, res){
+        try{
+            let orders = await Order.findAll({
+                include : Product
             })
             res.status(200).json(orders)
-        } catch (err) {
+        } catch(err){
             res.status(500).json(err)
         }
     }
-
-    // static async create(req, res) {
-    //     try {
-    //         const { UserId, } = req.body
-    //         let result = await Order.create({
-    //             UserId
-    //         })
-    //         res.status(201).json(result)
-    //     } catch (err) {
-    //         res.status(500).json(err)
-    //     }
-    // }
-
-    static async checkout(req, res) {
-        try {
-            const { UserId } = req.body
-            
-            const shoppingCart = await ShoppingCart.findOne({
-                where: { status: "open", UserId }
+    static async create (req, res){
+        try{
+            const id = +req.userData.id
+            const { qty, ProductId } = req.body
+            //buat table order
+            let result = await Order.create({
+                UserId : id
             })
-
-            const lineItems = await LineItem.findAll({
-                include: [Product],
-                where: {ShoppingCartId:shoppingCart.id}
-            })
-            
-            let subtotal = 0;
-            lineItems.forEach(lineItem => {
-                subtotal = subtotal + (lineItem.qty*lineItem.Product.price)
-            })
-
-            console.log(subtotal)
-
-            // let result = await Order.create({
-            //     OrderId,
-            //     subtotal:,
-            //     discount: ,
-            //     tax: ,
-            //     totalDue: ,
-            //     totalQty: ,
-            //     paymentTrasaction: ,
-            // })
-
-            res.status(201).json(lineItems)
-        } catch (err) {
-            res.status(500).json(err)
-        }
-    }
-
-    static async createCart(req, res) {
-        try {
-            const { UserId,status } = req.body;
-            let result = await ShoppingCart.create({
-                UserId,status
-            });
-            res.status(201).json(result)
-        } catch (err) {
-            res.status(500).json(err)
-        }
-    }
-
-    static async addToCart(req, res) {
-        try {
-            const { UserId, qty, ProductId } = req.body;
-
-            // cari keranjang yang open
-            const shoppingCart = await ShoppingCart.findOne({
-                where: { status: "open", UserId:UserId }
-            })
-
-            // masukin ke keranjang
-            let result = await LineItem.create({
-                ShoppingCartId: shoppingCart.id,
+            //membuat table line item dimana OrderId sama dengan id dari table order yang telah dibuat diatas
+            let resultLine = await LineItem.create({
+                OrderId: result.id,
                 ProductId,
                 qty,
-                status: "cart" //masukin hooks aja nanti
+                status:'order'
+            })
+            //cari data line item dimana OrderId sama dengan id di table order yang dibuat diatas
+            let resultGet = await LineItem.findOne({
+                include: [Product, Order],
+                where: {OrderId:resultLine.OrderId}
             })
 
-            res.status(201).json(result)
-        } catch (err) {
+            //mengambil data price di table product yang telah dicari diatas
+            let tempPrice = resultGet.Product.price
+            //mengambil data qty di table product yang telah dicari diatas
+            let tempQty = resultGet.qty
+            // menghitung subtotal yaitu price dikali qty
+            let tempsubtotal = tempPrice * tempQty
+
+            // menghitung discount berdasarkan jumlah qty
+            let tempDiscount
+            if ( resultGet.qty > 2 ){
+                tempDiscount = (tempsubtotal * 5) / 100
+            } else{
+                tempDiscount = 0
+            }
+
+            //mengambil data tax di table product yang telah dicari diatas
+            let tempTax = resultGet.Order.tax
+            //menghitung tax yaitu subtotal dikali 10 % 
+            let tempTotalTax = (tempsubtotal * tempTax) /100
+            // menghitung totalDue yaitu subtotal - discount + tax
+            let totalDue = tempsubtotal - tempDiscount + tempTotalTax
+
+            //update table order masukan data-data yang telah dihitung diatas
+            let resultUpdate = await Order.update({
+                subtotal: tempsubtotal,
+                discount : tempDiscount,
+                totalDue : totalDue,
+                totalQty : tempQty,
+                status: "unpaid",
+            },{where: {id:resultGet.OrderId}})
+
+            let resultt = await Order.findOne({
+                where: {id:resultLine.OrderId}
+            })
+            res.status(201).json(resultt)
+        } catch(err){
             res.status(500).json(err)
         }
     }
-
+    //update setelah pembayaran
+    static async updatePayment (req, res) {
+        const id = +req.userData.id
+        const { paymentTrasaction } = req.body
+        try {
+            let order = await Order.findOne({
+                where: {UserId:id, status:'unpaid'}
+            })
+            let result = await Order.update({
+                paymentTrasaction,
+                status: 'paid'
+            }, {
+                where: {id:order.id}
+              })
+            res.status(201).json(result)
+        } catch(err){
+            res.status(500).json(err)
+        }
+    }
+    //update jika pembatalan order
+    static async cancel (req, res) {
+        const id = +req.userData.id
+        //const { status } = +req.body
+        let result = await Order.update({
+            status : 'cancel'
+        }, {
+            where: {UserId:id, status:'unpaid'}
+          })
+        res.status(201).json(result)
+        } catch(err){
+        res.status(500).json(err)
+    }
+    //mengambil data semua order berdasarkan user id di access token
+    static async orderByUserId (req, res) {
+        const id = +req.userData.id
+        let result = await Order.findAll({
+            where: {UserId:id}
+          })
+        res.status(201).json(result)
+        } catch(err){
+        res.status(500).json(err)
+    }
+    //mengambil data order yang belum dibayar dan user id di access token
+    static async orderUnpaid (req, res) {
+        const id = +req.userData.id
+        let result = await Order.findOne({
+        }, {
+            where: {UserId:id, status:'unpaid'}
+        })
+        res.status(201).json(result)
+        } catch(err){
+        res.status(500).json(err)
+    }
 }
 
 module.exports = OrderController
