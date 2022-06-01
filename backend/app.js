@@ -3,6 +3,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 require('dotenv').config()
 
+const stripe = require("./middlewares/stripe");
+
 const cors = require('cors')
 
 app.use(cors())
@@ -20,3 +22,4 @@ app.listen(port, () => {
 
 })
 
+app.post("/payment", cors(), stripe);
