@@ -14,12 +14,12 @@ app.use(express.urlencoded({ extended: true }));
 const routes = require('./routes');
 app.use(routes)
 
+app.use('/images',express.static('./images/'));
 const errHandling = require('./middlewares/error');
 app.use(errHandling);
 
 app.listen(port, () => {
     console.log(`App is listening on ${port}`);
-
 })
 
 app.post("/payment", cors(), stripe);
