@@ -30,10 +30,10 @@ const CarouselComponent = () => {
         interval={3000}
         infiniteLoop={true}
       >
-        {dummyImg.map((img) => {
+        {dummyImg.map((img,index) => {
           return (
-            <div>
-              <img alt="" src={img.image} style={{ maxHeight: "80vh" }}></img>
+            <div key={index}>
+              <img className="object-cover" alt="" src={img.image} style={{ maxHeight: "80vh" }}></img>
               <p
                 className="legend"
                 style={{

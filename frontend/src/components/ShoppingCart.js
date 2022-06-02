@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { GiFruitBowl } from "react-icons/gi";
 import { BsFillTrashFill, BsPencilSquare } from "react-icons/bs";
@@ -11,6 +11,10 @@ import Swal from "sweetalert2";
 const ShoppingCart = () => {
   const navigate = useNavigate();
   const [showCart, setShowCart] = useState(false);
+
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) navigate('/login');
+}, []);
 
   async function editQty() {
     const { value: qty } = await Swal.fire({
@@ -49,9 +53,8 @@ const ShoppingCart = () => {
   return (
     <div className="flex">
       <aside
-        className={`flex transform top-0 left-0 w-80 fixed h-screen overflow-auto ease-in-out transition-all duration-300 z-[3] ${
-          showCart ? "translate-x-0" : "-translate-x-3/4"
-        } `}
+        className={`flex transform top-0 left-0 w-80 fixed h-screen overflow-auto ease-in-out transition-all duration-300 z-[3] ${showCart ? "translate-x-0" : "-translate-x-3/4"
+          } `}
       >
         <div className="justify-between border-r-4 border-lightColor pt-6 w-3/4 bg-darkColor">
           <div>
@@ -116,12 +119,14 @@ const ShoppingCart = () => {
           </div>
         </div>
         <div className="w-1/4 flex justify-center items-center max-h-screen">
-          <button
-            className="h-12 w-12 bg-lightColor text-darkColor text-2xl flex justify-center items-center rounded-full"
-            onClick={() => setShowCart(!showCart)}
-          >
-            <FaShoppingCart />
-          </button>
+          <div className="h-14 w-14 bg-darkColor flex justify-center items-center rounded-full">
+            <button
+              className="h-12 w-12 bg-lightColor text-darkColor text-2xl flex justify-center items-center rounded-full"
+              onClick={() => setShowCart(!showCart)}
+            >
+              <FaShoppingCart />
+            </button>
+          </div>
         </div>
       </aside>
       <main className="w-full max-h-full">
@@ -131,7 +136,7 @@ const ShoppingCart = () => {
         <div className="sticky z-[1] ">
           <AfterLoginRoutes />
         </div>
-        <div className="pt-2 bg-white">
+        <div className="pt-2">
           <Footer />
         </div>
       </main>

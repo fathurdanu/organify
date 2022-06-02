@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const url = 'http://localhost:3000/users';
+import base_url from '../helpers/base_url';
+
+const url = base_url + '/users';
 
 
 export const register = (data) => {
@@ -20,12 +22,12 @@ export const register = (data) => {
             url: url + '/register',
             data: data
         })
-            .then(response => {
-                Swal.fire(
+            .then(async response => {
+                await Swal.fire(
                     'Success!',
                     'You have been registered!',
                     'success'
-                )
+                  )
                 dispatch({
                     type: "REGISTER",
                     payload: {
@@ -100,7 +102,7 @@ export const login = (data) => {
 }
 
 
-export const getUser = (id) => {
+export const getUser = () => {
     return (dispatch) => {
         // Loading
         dispatch({
@@ -114,7 +116,7 @@ export const getUser = (id) => {
         // Success
         axios({
             method: 'GET',
-            url: url + '/' +id,
+            url: url + '/info',
             headers:{
                 access_token: localStorage.getItem('access_token')
             }
@@ -133,6 +135,58 @@ export const getUser = (id) => {
                 console.log(error)
                 dispatch({
                     type: "GET_USER",
+                    payload: {
+                        status: 'error',
+                        data: error.message
+                    }
+                });
+            });
+    }
+}
+
+export const updateUser = (data) => {
+    return (dispatch) => {
+        // Loading
+        dispatch({
+            type: "UPDATE_USER",
+            payload: {
+                status: 'loading',
+                data: 'Loading'
+            }
+        })
+
+        // Success
+        axios({
+            method: 'PUT',
+            url: url,
+            data: data,
+            headers:{
+                access_token: localStorage.getItem('access_token')
+            }
+        })
+            .then(response => {
+                Swal.fire(
+                    'Success!',
+                    'Your profile has been updated!',
+                    'success'
+                )
+                dispatch({
+                    type: "UPDATE_USER",
+                    payload: {
+                        status: 'data',
+                        data: response.data
+                    }
+                });
+            })
+            .catch(error => {
+                // Error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.response.data.message,
+                  })
+                dispatch({
+                    type: "UPDATE_USER",
                     payload: {
                         status: 'error',
                         data: error.message

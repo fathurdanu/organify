@@ -1,4 +1,5 @@
 import HomePage from "./HomePage";
+import SearchedHomePage from "./SearchedHomePage";
 import EditProfile from "./EditProfile";
 import RegisterUser from "./RegisterUser";
 import ProfileUser from "./ProfileUser";
@@ -9,6 +10,7 @@ import OrderDetailsPage from "./OrderDetailsPage";
 
 export {
   HomePage,
+  SearchedHomePage,
   EditProfile,
   RegisterUser,
   ProfileUser,
