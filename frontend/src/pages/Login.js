@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/userActions';
+import Swal from 'sweetalert2'
 
 function Login() {
   const { action, status, data } = useSelector(state => state.userReducer)
@@ -15,8 +16,10 @@ function Login() {
   useEffect(() => {
     if (localStorage.getItem("access_token")){
       if(localStorage.getItem("type")==="user"){
+        Swal.fire("Login Success!", "Welcome!", "success");
         navigate('/user/home');
       }else if(localStorage.getItem("type")==="cms"){
+        Swal.fire("Login Success!", "Logged in as Admin", "success");
         navigate('/cms/dashboard');
       }
     } ;

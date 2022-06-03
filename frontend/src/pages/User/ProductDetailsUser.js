@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiPencil } from "react-icons/bi";
 import {
@@ -12,6 +12,9 @@ import "swiper/css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/cmsActions";
+import { addToCart, getCartByUserId } from "../../actions/shoppingAction";
+
+import Swal from "sweetalert2";
 
 const ProductDetailsUser = () => {
   const { action, status, data } = useSelector((state) => state.cmsReducer);
@@ -23,7 +26,29 @@ const ProductDetailsUser = () => {
 
   useEffect(() => {
     dispatch(getProductById(id));
-  }, []);
+  }, [id]);
+
+  async function inputQty() {
+    const { value: qty } = await Swal.fire({
+      title: "Input the desired quantity",
+      input: "number",
+      inputLabel: "Product Quantity",
+      inputPlaceholder: "Enter qty",
+      confirmButtonColor: "#0B4619",
+    });
+
+    if (qty) {
+      dispatch(addToCart(
+        {
+          ProductId: id,
+          qty: qty
+        }
+      )).then(()=>{
+        dispatch(getCartByUserId());
+      })
+    }
+  }
+
 
   return (
     <div>
@@ -47,13 +72,13 @@ const ProductDetailsUser = () => {
               onSwiper={(swiper) => console.log(swiper)}
             >
               {action === "GET_PRODUCT_BY_ID" && data !== "loading"
-                ? data.ProductImages.map((img,index) => {
-                    return (
-                      <SwiperSlide key={index}>
-                        <img src={`${url}/images/${img.filename}`}></img>
-                      </SwiperSlide>
-                    );
-                  })
+                ? data.ProductImages.map((img, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <img src={`${url}/images/${img.filename}`}></img>
+                    </SwiperSlide>
+                  );
+                })
                 : "Loading"}
             </Swiper>
             <div className="px-6">
@@ -72,6 +97,12 @@ const ProductDetailsUser = () => {
                   {data.stock}
                 </p>
                 <p>in stock</p>
+              </div>
+              <div className="flex justify-center mt-2">
+                <button
+                  className="bg-darkColor text-lightColor p-2 font-semibold rounded-md"
+                  onClick={() => inputQty()}
+                >Add To Cart</button>
               </div>
             </div>
           </div>
@@ -117,12 +148,12 @@ const ProductDetailsUser = () => {
                   <div className="flex py-1">
                     {data.rating !== 0 && data.rating !== null
                       ? [...Array(data.rating)].map((x, i) => (
-                          <BsFillStarFill
-                            key={i}
-                            className="text-accentColor"
-                            size={20}
-                          />
-                        ))
+                        <BsFillStarFill
+                          key={i}
+                          className="text-accentColor"
+                          size={20}
+                        />
+                      ))
                       : "No ratings given"}
                   </div>
                 </div>

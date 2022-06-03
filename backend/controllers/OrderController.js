@@ -1,4 +1,4 @@
-const { Product, Order, LineItem, ShoppingCart } = require('../models')
+const { Product, Order, LineItem, ShoppingCart, User, ProductImage } = require('../models')
 
 class OrderController {
     //hanya untuk admin
@@ -75,13 +75,13 @@ class OrderController {
     //update setelah pembayaran
     static async updatePayment(req, res, next) {
         const id = +req.userData.id
-        const { paymentTrasaction } = req.body
+        // const { paymentTrasaction } = req.body
         try {
             let order = await Order.findOne({
                 where: { UserId: id, status: 'unpaid' }
             })
             let result = await Order.update({
-                paymentTrasaction,
+                paymentTrasaction: "debit",
                 status: 'paid'
             }, {
                 where: { id: order.id }
@@ -112,8 +112,11 @@ class OrderController {
     static async orderByUserId(req, res, next) {
         try {
             const id = +req.userData.id
-            let result = await Order.findAll({
-                include: Product
+            let result = await Order.findOne({
+                // include: [Product,User,]
+                include: [{
+                    model: Product, include: [ProductImage]
+                }, User]
             }, {
                 where: { UserId: id }
             })

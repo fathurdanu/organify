@@ -14,10 +14,16 @@ class ShoppingCartController{
     static async getCartByUserId (req,res, next){
         const id= +req.userData.id
         try {
-            let getCart = await ShoppingCart.findAll({
-                where: { UserId:id }
+            let getCart = await ShoppingCart.findOne({
+                where: { status:"open", UserId:id }
             })
-            res.status(200).json(getCart)
+            let lineItems = await LineItem.findAll({
+                // attributes: ["*"],
+                include:[Product],
+                where: { ShoppingCartId:getCart.id}
+            })
+            let newVar = {...getCart.dataValues, lineItems:lineItems}
+            res.status(200).json(newVar)
         } catch(err){
             next(err)
         }
@@ -85,6 +91,7 @@ class ShoppingCartController{
                 discount: discount,
                 totalDue: totalDue,
                 totalQty: totalQty,
+                tax: totalTax,
                 status:'unpaid',
                 UserId: id
             })
@@ -100,7 +107,43 @@ class ShoppingCartController{
                 where: {status:'open',UserId:id}
             })
 
+            await ShoppingCart.create({
+                UserId: id,
+                status: "open"
+            })
+
             res.status(201).json(update)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+
+    static async editLineItem(req, res, next) {
+        try {
+            const id = +req.params.id;
+            const {qty} = req.body;
+
+            const result = await LineItem.update({
+                qty:Number(qty),
+            },{
+                where: {id}
+            })
+            
+            res.status(201).json(result)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+
+    static async deleteLineItem(req, res, next) {
+        try {
+            const id = +req.params.id;
+            const result = await LineItem.destroy({
+                where:{id}
+            })
+            res.status(201).json(result)
         } catch (err) {
             next(err)
         }

@@ -25,8 +25,8 @@ const CMSDashboard = () => {
   }, [queryDone]);
 
   return (
-    <div>
-      <h1 className="text-xl font-bold py-3">Welcome, Admin!</h1>
+    <div className="pt-20">
+      <h1 className="text-4xl font-bold py-3">Welcome, Admin!</h1>
       <div className="flex py-2">
         <h2 className="flex flex-col text-lg font-semibold py-2">
           Your Products
@@ -47,38 +47,22 @@ const CMSDashboard = () => {
       </div>
       <hr />
       <div className="p-3">
-        <div className="flex flex-wrap space-x-2 p-3 bg-darkColor rounded w-fit">
-          <label className="flex items-center cursor-pointer">
-            <div className="relative">
-              <input
-                id="toggleA"
-                type="checkbox"
-                className="sr-only"
-                onChange={() => {
-                  navigate(`/cms/dashboard/fruit`);
-                }}
-              />
-              <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-              <div className="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-            </div>
-            <div className="ml-3 text-lightColor font-medium">Fruits</div>
-          </label>
-
-          <label className="flex items-center cursor-pointer">
-            <div className="relative">
-              <input
-                id="toggleB"
-                type="checkbox"
-                className="sr-only"
-                onChange={() => {
-                  navigate(`/cms/dashboard/vegetable`);
-                }}
-              />
-              <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-              <div className="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
-            </div>
-            <div className="ml-3 text-lightColor font-medium">Vegetables</div>
-          </label>
+        <div className="flex flex-wrap space-x-2 p-3  rounded w-fit">
+        <button
+              className="hover:bg-lightColor hover:text-darkColor w-36 p-2 text-2xl rounded-md bg-darkColor text-lightColor font-semibold"
+              onClick={() => {
+                navigate(`/cms/dashboard/fruit`);
+              }}>
+                Fruits
+            </button>
+          
+            <button
+              className="hover:bg-lightColor hover:text-darkColor w-36 p-2 text-2xl rounded-md bg-darkColor text-lightColor font-semibold"
+              onClick={() => {
+                navigate(`/cms/dashboard/vegetable`);
+              }}>
+                Vegetables
+            </button>
         </div>
       </div>
       <div className="overflow-scroll max-h-screen py-5 no-scrollbar">

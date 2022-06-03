@@ -7,16 +7,21 @@ import AfterLoginRoutes from "../Routes/AfterLoginRoutes";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Swal from "sweetalert2";
+import { getCartByUserId, checkout, editLineItem, deleteLineItem } from "../actions/shoppingAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const ShoppingCart = () => {
+  const { action, status, data } = useSelector((state) => state.shoppingReducer);
   const navigate = useNavigate();
   const [showCart, setShowCart] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!localStorage.getItem("access_token")) navigate('/login');
-}, []);
+    dispatch(getCartByUserId());
+  }, []);
 
-  async function editQty() {
+  async function editQty(id) {
     const { value: qty } = await Swal.fire({
       title: "Input the desired quantity",
       input: "number",
@@ -26,14 +31,15 @@ const ShoppingCart = () => {
     });
 
     if (qty) {
-      Swal.fire({
-        title: `Entered Qty: ${qty}`,
-        confirmButtonColor: "#0B4619",
-      });
+      console.log(typeof id);
+      console.log(typeof qty);
+      dispatch(editLineItem(id,{qty:+qty})).then(() => {
+        dispatch(getCartByUserId());
+      })
     }
   }
 
-  function deleteCartItem() {
+  function deleteCartItem(id) {
     Swal.fire({
       title: "Are you sure you want to delete this item from Cart?",
       showDenyButton: true,
@@ -43,11 +49,30 @@ const ShoppingCart = () => {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire("Saved!", "", "success");
-      } else if (result.isDenied) {
-        Swal.fire("Changes are not saved", "", "info");
+        dispatch(deleteLineItem(id)).then(() => {
+          dispatch(getCartByUserId());
+        })
       }
     });
+  }
+
+
+  const checkoutHandling = () => {
+    Swal.fire({
+      title: 'Are you sure want to checkout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(checkout()).then(() => {
+          navigate("/user/checkout");
+        })
+      }
+    })
+
   }
 
   return (
@@ -67,50 +92,41 @@ const ShoppingCart = () => {
           </div>
           <div className="mx-auto flex">
             <ul className="my-2">
-              <li className="my-2 flex">
-                <button className="flex items-center px-4 py-2 text-lightColor bg-darkColor">
-                  <GiFruitBowl size={25} />
-                  <span className="mx-4 font-medium">apel</span>
-                  <span className="font-medium">1</span>
-                </button>
+              {(action === "GET_CART_BY_USER_ID" && status === 'data' && data !== "loading") ?
+                data.lineItems.map((lineItem, index) => {
+                  return (
+                    <div key={index}>
+                      <li className="my-2 flex">
+                        <button className="flex items-center px-4 py-2 text-lightColor bg-darkColor">
+                          <GiFruitBowl size={25} />
+                          <span className="mx-4 font-medium">{lineItem.Product.name}</span>
+                          <span className="font-medium">{lineItem.qty}</span>
+                        </button>
 
-                <button
-                  className="mx-1 text-lightColor hover:text-accentColor"
-                  onClick={editQty}
-                >
-                  <BsPencilSquare />
-                </button>
-                <button
-                  className="mx-3 text-lightColor hover:text-red-600"
-                  onClick={deleteCartItem}
-                >
-                  <BsFillTrashFill />
-                </button>
-              </li>
+                        <button
+                          className="mx-1 text-lightColor hover:text-accentColor"
+                          onClick={()=>editQty(lineItem.id)}
+                        >
+                          <BsPencilSquare />
+                        </button>
+                        <button
+                          className="mx-3 text-lightColor hover:text-red-600"
+                          onClick={()=>deleteCartItem(lineItem.id)}
+                        >
+                          <BsFillTrashFill />
+                        </button>
+                      </li>
 
-              <li className="my-2 flex">
-                <button className="flex items-center px-4 py-2 text-lightColor">
-                  <GiFruitBowl size={25} />
-                  <span className="mx-4 font-medium">mangga</span>
-                  <span className="font-medium">10</span>
-                </button>
-                <button
-                  className="mx-1 text-lightColor hover:text-accentColor"
-                  onClick={editQty}
-                >
-                  <BsPencilSquare />
-                </button>
-                <button
-                  className="mx-3 text-lightColor hover:text-red-600"
-                  onClick={deleteCartItem}
-                >
-                  <BsFillTrashFill />
-                </button>
-              </li>
+                    </div>
+                  )
+                }
+                )
+                : <></>
+              }
               <li className="my-2 w-3/4 absolute left-12 bottom-5">
                 <button
                   className="flex bg-lightColor items-center px-4 py-2 text-darkColor hover:bg-white rounded-md"
-                  onClick={() => navigate("/user/checkout")}
+                  onClick={() => checkoutHandling()}
                 >
                   <span className="mx-4 font-medium">Checkout</span>
                 </button>

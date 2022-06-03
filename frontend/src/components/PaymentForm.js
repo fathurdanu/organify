@@ -22,10 +22,12 @@ const CARD_OPTIONS = {
   },
 };
 
-export default function PaymentForm() {
+export default function PaymentForm(props) {
   const [success, setSuccess] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
+
+  const totalDue = props.totalDue 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +40,7 @@ export default function PaymentForm() {
       try {
         const { id } = paymentMethod;
         const response = await axios.post("http://localhost:3000/payment", {
-          amount: 50000000,
+          amount: totalDue * 100,
           id: id,
         });
         if (response.data.success) {
@@ -57,7 +59,7 @@ export default function PaymentForm() {
     <>
       {!success ? (
         <form onSubmit={handleSubmit}>
-          <h1 class="text-center text-lg font-semibold pb-4">
+          <h1 className="text-center text-lg font-semibold pb-4">
             Input your Credit / Debit Card Number
           </h1>
           <fieldset className="FormGroup">
@@ -69,7 +71,7 @@ export default function PaymentForm() {
         </form>
       ) : (
         <div>
-          <h2 class="text-lg font-bold text-darkColor text-center">
+          <h2 className="text-lg font-bold text-darkColor text-center">
             Payment Success!
           </h2>
         </div>
