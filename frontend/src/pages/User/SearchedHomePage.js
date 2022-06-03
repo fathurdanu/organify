@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CarouselComponent from "../../components/CarouselComponent";
-import ProductFilter from "../../components/ProductFilter";
 import CardContainerUser from "../../components/CardContainerUser";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -28,9 +27,6 @@ const SearchedHomePage = () => {
           <h1 className="font-bold text-xl mt-3">
             Choose from these categories
           </h1>
-        </div>
-        <div className="py-3">
-          <ProductFilter />
         </div>
       </div>
       <div className="overflow-scroll max-h-screen py-5 no-scrollbar">

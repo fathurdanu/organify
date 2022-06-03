@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import CardContainerCMS from "../../components/CardContainerCMS";
-import ProductFilter from "../../components/ProductFilter";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../actions/cmsActions";
@@ -18,7 +17,6 @@ const CMSSearchedDashboard = () => {
   useEffect(() => {
     dispatch(getAllProducts());
   }, []);
-
   return (
     <div>
       <h1 className="text-xl font-bold py-3">Welcome, Admin!</h1>
@@ -40,13 +38,10 @@ const CMSSearchedDashboard = () => {
         </div>
       </div>
       <hr />
-      <div className="p-3">
-        <ProductFilter />
-      </div>
       <div className="overflow-scroll max-h-screen py-5 no-scrollbar">
         {action === "GET_ALL_PRODUCTS" &&
         status === "data" &&
-        (query === "buah" || query === "vegetable") ? (
+        (query === "fruit" || query === "vegetable") ? (
           <CardContainerCMS
             data={data.filter((product) => product.category.includes(query))}
           />

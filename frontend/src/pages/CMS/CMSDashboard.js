@@ -18,6 +18,11 @@ const CMSDashboard = () => {
   }, []);
 
   const [query, setQuery] = useState("");
+  const [queryDone, setQueryDone] = useState(false);
+
+  useEffect(() => {
+    navigate(`/cms/dashboard/${query}`);
+  }, [queryDone]);
 
   return (
     <div>
@@ -34,7 +39,7 @@ const CMSDashboard = () => {
           ></input>
           <button
             className="ml-1 mt-6 p-3 rounded bg-white text-darkColor hover:bg-midColor hover:text-white"
-            onClick={() => navigate(`/cms/dashboard/${query}`)}
+            onClick={() => setQueryDone(true)}
           >
             <FaSearch />
           </button>
@@ -50,8 +55,7 @@ const CMSDashboard = () => {
                 type="checkbox"
                 className="sr-only"
                 onChange={() => {
-                  setQuery("buah");
-                  navigate(`/cms/dashboard/${query}`);
+                  navigate(`/cms/dashboard/fruit`);
                 }}
               />
               <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
@@ -67,8 +71,7 @@ const CMSDashboard = () => {
                 type="checkbox"
                 className="sr-only"
                 onChange={() => {
-                  setQuery("vegetable");
-                  navigate(`/cms/dashboard/${query}`);
+                  navigate(`/cms/dashboard/vegetable`);
                 }}
               />
               <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
