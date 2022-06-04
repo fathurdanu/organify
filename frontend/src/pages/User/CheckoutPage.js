@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-modal";
 import Header from "../../components/Header";
 import StripeContainer from "../../components/StripeContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrderByUserId, updatePayment } from "../../actions/shoppingAction";
+import { getOrder, updatePayment, cancelOrder } from "../../actions/shoppingAction";
+import Swal from 'sweetalert2';
 
 
 import base_url from '../../helpers/base_url'
 
 const CheckoutPage = () => {
   const { action, status, data } = useSelector(state => state.shoppingReducer)
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let subtitle;
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    dispatch(getOrderByUserId())
+    dispatch(getOrder(+id))
   }, [])
 
   const customStyles = {
@@ -48,8 +50,25 @@ const CheckoutPage = () => {
   function closeModal() {
     setOpenModal(false);
     dispatch(updatePayment()).then(() => {
-      dispatch(getOrderByUserId())
+      dispatch(getOrder(+id))
     })
+  }
+
+  const cancelOrderHandler = () => {
+    Swal.fire({
+      title: "Are you sure you want to cancel this order?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+      confirmButtonColor: "#0B4619",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        dispatch(cancelOrder(id)).then(() => {
+          dispatch(getOrder(+id))
+        })
+      }
+    });
   }
 
   return (
@@ -230,18 +249,31 @@ const CheckoutPage = () => {
                     </tbody>
                   </table>
                   <div align="center">
-                    { data.status === "unpaid"?
-                      <button
-                        className="text-lightColor bg-darkColor font-bold p-3 rounded-md mt-5"
-                        onClick={() => setOpenModal(true)}
+                    {data.status === "unpaid" ?
+                      <div className="space-x-2">
+                        <button
+                          className="text-lightColor bg-darkColor font-bold p-3 rounded-md mt-5"
+                          onClick={() => cancelOrderHandler()}
+                        >
+                          CANCEL ORDER
+                        </button>
+                        <button
+                          className="text-lightColor bg-darkColor font-bold p-3 rounded-md mt-5"
+                          onClick={() => setOpenModal(true)}
+                        >
+                          PAY NOW
+                        </button>
+                      </div>
+                      : data.status === "cancelled" ? <div
+                        className="text-lightColor bg-red-600 font-bold p-3 rounded-md mt-5"
                       >
-                        PAY NOW
-                      </button>
-                      : <div
-                      className="text-lightColor bg-darkColor font-bold p-3 rounded-md mt-5"
-                    >
-                      ORER HAS BEEN PAID
-                    </div>
+                        CANCELLED
+                      </div>
+                        : <div
+                          className="text-lightColor bg-darkColor font-bold p-3 rounded-md mt-5"
+                        >
+                          ORER HAS BEEN PAID
+                        </div>
                     }
                   </div>
                 </div>

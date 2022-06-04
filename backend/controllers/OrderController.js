@@ -74,17 +74,19 @@ class OrderController {
     }
     //update setelah pembayaran
     static async updatePayment(req, res, next) {
-        const id = +req.userData.id
+        // const UserId = +req.userData.id
+        const OrderId = +req.params.id; 
         // const { paymentTrasaction } = req.body
         try {
-            let order = await Order.findOne({
-                where: { UserId: id, status: 'unpaid' }
-            })
+            // let order = await Order.findOne({
+            //     where: { UserId: id, status: 'unpaid' }
+            // })
+
             let result = await Order.update({
                 paymentTrasaction: "debit",
                 status: 'paid'
             }, {
-                where: { id: order.id }
+                where: { id: OrderId }
             })
 
             res.status(201).json(result)
@@ -95,25 +97,69 @@ class OrderController {
     //update jika pembatalan order
     static async cancel(req, res, next) {
         try {
-            const id = +req.userData.id
-            //const { status } = +req.body
+            // const UserId = +req.userData.id
+            const OrderId = +req.params.id
+
+            // let order = await Order.findOne({
+            //     where: { UserId: UserId, status: 'unpaid' }
+            // })
+            
             let result = await Order.update({
-                status: 'canceled'
+                status: 'cancelled'
             }, {
-                where: { UserId: id, status: 'unpaid' }
+                where: { id:OrderId }
             })
+
+            const lineItems = await LineItem.findAll({
+                include: Product,
+                where: { OrderId: OrderId }
+            })
+
+            for (const lineItem of lineItems){
+                const product = await Product.findByPk(lineItem.ProductId);
+
+                await Product.update({
+                    stock: product.stock + lineItem.qty,
+                    totalSold: product.totalSold - lineItem.qty,
+                    
+                },{
+                    where: { id: lineItem.ProductId }
+                })
+            }
+
+
             res.status(201).json(result)
         } catch (err) {
             next(err)
         }
     }
 
+    //mengambil order berdasarkan order id
+    static async getOrder(req, res, next) {
+        try {
+            // const UserId = +req.userData.id;
+            const OrderId = +req.params.id;
+            let result = await Order.findOne({
+                include: [{
+                    model: Product, include: [ProductImage]
+                }, User],
+                where: {
+                    // UserId: UserId,
+                    id: OrderId
+                }
+            })
+            result ? res.status(201).json(result)
+                : res.status(404).json({ message: "Not Found" })
+        } catch (err) {
+            next(err)
+        }
+    }
+
     //mengambil data semua order berdasarkan user id di access token
-    static async orderByUserId(req, res, next) {
+    static async getOrdersByUserId(req, res, next) {
         try {
             const id = +req.userData.id
-            let result = await Order.findOne({
-                // include: [Product,User,]
+            let result = await Order.findAll({
                 include: [{
                     model: Product, include: [ProductImage]
                 }, User]

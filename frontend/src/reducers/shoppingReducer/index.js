@@ -41,6 +41,13 @@ const shoppingReducer = (state = initialState, { type, payload }) => {
                 status: payload.status,
                 data: payload.data
             }
+        case "CANCEL_ORDER":
+            return {
+                ...state,
+                action: "CANCEL_ORDER",
+                status: payload.status,
+                data: payload.data
+            }
         case "EDIT_LINE_ITEM":
             return {
                 ...state,

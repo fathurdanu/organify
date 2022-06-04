@@ -103,7 +103,7 @@ export const getCartByUserId = () => {
 }
 
 
-export const getOrderByUserId = () => {
+export const getOrder = (id) => {
     return (dispatch) => {        
         // Loading
         dispatch({
@@ -117,7 +117,7 @@ export const getOrderByUserId = () => {
         // Success
         axios({
             method: 'GET',
-            url: url + '/orders',
+            url: url + '/orders/'+id,
             headers: {
                 access_token : localStorage.getItem("access_token")
             }
@@ -297,7 +297,7 @@ export const deleteLineItem = (id) => {
 }
 
 
-export const updatePayment = () => {
+export const updatePayment = (id) => {
     return async (dispatch) => {        
         // Loading
         dispatch({
@@ -311,7 +311,7 @@ export const updatePayment = () => {
         // Success
         await axios({
             method: 'PUT',
-            url: url + '/orders/payment',
+            url: url + '/orders/payment/'+id,
             headers: {
                 access_token : localStorage.getItem("access_token")
             }
@@ -333,6 +333,56 @@ export const updatePayment = () => {
                   })
                 dispatch({
                     type: "UPDATE_PAYMENT",
+                    payload: {
+                        status: 'error',
+                        data: error.message
+                    }
+                });
+            });
+    }
+}
+
+export const cancelOrder = (id) => {
+    return async (dispatch) => {        
+        // Loading
+        dispatch({
+            type: "CANCEL_ORDER",
+            payload: {
+                status: 'loading',
+                data: 'Loading'
+            }
+        })
+
+        // Success
+        await axios({
+            method: 'PUT',
+            url: url + '/orders/cancel/'+id,
+            headers: {
+                access_token : localStorage.getItem("access_token")
+            }
+        })
+            .then(response => {
+                Swal.fire(
+                    'Cancelled!',
+                    'The order has been cancelled!',
+                    'success'
+                  )
+                dispatch({
+                    type: "CANCEL_ORDER",
+                    payload: {
+                        status: 'data',
+                        data: response.data
+                    }
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.response.data.message,
+                  })
+                dispatch({
+                    type: "CANCEL_ORDER",
                     payload: {
                         status: 'error',
                         data: error.message

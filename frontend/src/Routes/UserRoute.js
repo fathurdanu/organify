@@ -9,7 +9,7 @@ const UserRoute = () => {
     <Routes>
       <Route path="/" element={<Navigate replace to="/user/home" />} />
       <Route path="/*" element={<ShoppingCart />}></Route>
-      <Route path="/checkout" element={<CheckoutPage />}></Route>
+      <Route path="/checkout/:id" element={<CheckoutPage />}></Route>
     </Routes>
     // </div>
   );

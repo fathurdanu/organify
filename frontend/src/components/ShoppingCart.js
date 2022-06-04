@@ -21,6 +21,10 @@ const ShoppingCart = () => {
     dispatch(getCartByUserId());
   }, []);
 
+  useEffect(() => {
+    if (action === "CHECKOUT" && status === "data") navigate("/user/checkout/" + data.id);
+  }, [status]);
+
   async function editQty(id) {
     const { value: qty } = await Swal.fire({
       title: "Input the desired quantity",
@@ -33,7 +37,7 @@ const ShoppingCart = () => {
     if (qty) {
       console.log(typeof id);
       console.log(typeof qty);
-      dispatch(editLineItem(id,{qty:+qty})).then(() => {
+      dispatch(editLineItem(id, { qty: +qty })).then(() => {
         dispatch(getCartByUserId());
       })
     }
@@ -67,12 +71,9 @@ const ShoppingCart = () => {
       confirmButtonText: 'Yes'
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(checkout()).then(() => {
-          navigate("/user/checkout");
-        })
+        dispatch(checkout())
       }
     })
-
   }
 
   return (
@@ -105,13 +106,13 @@ const ShoppingCart = () => {
 
                         <button
                           className="mx-1 text-lightColor hover:text-accentColor"
-                          onClick={()=>editQty(lineItem.id)}
+                          onClick={() => editQty(lineItem.id)}
                         >
                           <BsPencilSquare />
                         </button>
                         <button
                           className="mx-3 text-lightColor hover:text-red-600"
-                          onClick={()=>deleteCartItem(lineItem.id)}
+                          onClick={() => deleteCartItem(lineItem.id)}
                         >
                           <BsFillTrashFill />
                         </button>
