@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate: function (product,option) {
         product.views = product.views || 0;
         product.totalSold = product.totalSold || 0;
-        product.rating = product.rating || 0;
+        product.rating = product.rating || Math.floor(Math.random() * 6);
       }
     },
     sequelize,

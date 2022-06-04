@@ -194,6 +194,51 @@ export const checkout = () => {
     }
 }
 
+export const addViews = (id) => {
+    return async (dispatch) => {        
+        // Loading
+        dispatch({
+            type: "ADD_VIEWS",
+            payload: {
+                status: 'loading',
+                data: 'Loading'
+            }
+        })
+
+        // Success
+        await axios({
+            method: 'PUT',
+            url: url + '/products/views/'+id,
+            headers: {
+                access_token : localStorage.getItem("access_token")
+            }
+        })
+            .then(response => {
+                dispatch({
+                    type: "ADD_VIEWS",
+                    payload: {
+                        status: 'data',
+                        data: response.data
+                    }
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.response.data.message,
+                  })
+                dispatch({
+                    type: "ADD_VIEWS",
+                    payload: {
+                        status: 'error',
+                        data: error.message
+                    }
+                });
+            });
+    }
+}
+
 export const editLineItem = (id,data) => {
     return async (dispatch) => {        
         // Loading

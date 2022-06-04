@@ -62,6 +62,13 @@ const shoppingReducer = (state = initialState, { type, payload }) => {
                 status: payload.status,
                 data: payload.data
             }
+        case "ADD_VIEWS":
+            return {
+                ...state,
+                action: "ADD_VIEWS",
+                status: payload.status,
+                data: payload.data
+            }
         default:
             return state;
     }

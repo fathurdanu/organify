@@ -116,6 +116,22 @@ class ProductController {
       next(err);
     }
   }
+
+  static async addViews(req, res, next) {
+    const id = req.params.id;
+    try {
+
+      let product = await Product.findByPk(id);
+      let result = await Product.update({
+        views: product.views + 1
+      }, {
+        where: { id }
+      });
+      res.status(201).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = ProductController;

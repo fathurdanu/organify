@@ -26,7 +26,7 @@ function Card(props) {
           <div className="flex grid-cols-5">
             <div className="flex col-span-2 w-12">
               <p className="text-accentColor inline text-2xl">
-                <AiFillStar />
+                <AiFillStar/>
               </p>
               <p className="inline">{data.rating}</p>
             </div>

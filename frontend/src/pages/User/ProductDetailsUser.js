@@ -12,7 +12,7 @@ import "swiper/css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/cmsActions";
-import { addToCart, getCartByUserId } from "../../actions/shoppingAction";
+import { addToCart, getCartByUserId, addViews } from "../../actions/shoppingAction";
 
 import Swal from "sweetalert2";
 
@@ -25,8 +25,9 @@ const ProductDetailsUser = () => {
   const url = "http://localhost:3000";
 
   useEffect(() => {
+    dispatch(addViews(id));
     dispatch(getProductById(id));
-  }, [id]);
+  }, []);
 
   async function inputQty() {
     const { value: qty } = await Swal.fire({
@@ -43,7 +44,7 @@ const ProductDetailsUser = () => {
           ProductId: id,
           qty: qty
         }
-      )).then(()=>{
+      )).then(() => {
         dispatch(getCartByUserId());
       })
     }
