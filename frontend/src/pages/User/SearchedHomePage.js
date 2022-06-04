@@ -28,11 +28,31 @@ const SearchedHomePage = () => {
             Choose from these categories
           </h1>
         </div>
+        <div className="p-3">
+          <div className="flex flex-wrap space-x-2 p-3 rounded w-fit">
+
+            <button
+              className={` ${(query === "fruit") ? "bg-lightColor text-darkColor hover:bg-darkColor hover:text-lightColor" : "hover:bg-lightColor hover:text-darkColor bg-darkColor text-lightColor"} w-36 p-2 text-2xl rounded-md font-semibold`}
+              onClick={() => {
+                (query === "fruit") ? navigate(`/user/home`) : navigate(`/user/home/fruit`);
+              }}>
+              Fruits
+            </button>
+
+            <button
+              className={` ${(query === "vegetable") ? "bg-lightColor text-darkColor hover:bg-darkColor hover:text-lightColor" : "hover:bg-lightColor hover:text-darkColor bg-darkColor text-lightColor"} w-36 p-2 text-2xl rounded-md font-semibold`}
+              onClick={() => {
+                (query === "vegetable") ? navigate(`/user/home`) : navigate(`/user/home/vegetable`);
+              }}>
+              Vegetables
+            </button>
+          </div>
+        </div>
       </div>
       <div className="overflow-scroll max-h-screen py-5 no-scrollbar">
         {action === "GET_ALL_PRODUCTS" &&
-        status === "data" &&
-        (query === "fruit" || query === "vegetable") ? (
+          status === "data" &&
+          (query === "fruit" || query === "vegetable") ? (
           <CardContainerUser
             data={data.filter((product) => product.category.includes(query))}
           />

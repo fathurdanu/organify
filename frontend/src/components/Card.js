@@ -2,6 +2,7 @@
 import React from "react";
 // import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
+import intToRupiah from "../helpers/rupiah"
 
 function Card(props) {
   // const [showOptions, setShowOptions] = useState(false);
@@ -19,7 +20,7 @@ function Card(props) {
         <div className="p-2 ">
           <p className="truncate">{data.name}</p>
           <div>
-            <p className="font-bold inline">Rp{data.price} </p>
+            <p className="font-bold inline">Rp{intToRupiah(data.price)} </p>
             <p className="inline">/ {data.weight} gr</p>
             <p className="block">{data.category}</p>
           </div>

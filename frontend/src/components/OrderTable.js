@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
+import intToRupiah from "../helpers/rupiah";
 
 const OrderTable = (props) => {
   const navigate = useNavigate();
@@ -60,12 +61,12 @@ const OrderTable = (props) => {
                     )}
                     <td className="text-right md:table-cell pb-3">
                       <span className="text-sm lg:text-base font-medium">
-                        {String(order.createdAt).slice(0, 10)}
+                        {String(order.createdAt).split('T')[0].split('-').reverse().join("-")}
                       </span>
                     </td>
                     <td className="text-right md:table-cell pb-3">
                       <span className="text-sm lg:text-base font-medium">
-                        {order.totalDue}
+                        {`Rp${intToRupiah(+order.totalDue)}`}
                       </span>
                     </td>
                     {order.status !== null ? (

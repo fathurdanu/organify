@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import StripeContainer from "../../components/StripeContainer";
 
 import base_url from "../../helpers/base_url";
+import intToRupiah from "../../helpers/rupiah";
 
 const OrderDetailsPage = () => {
   const dispatch = useDispatch();
@@ -247,7 +248,7 @@ const OrderDetailsPage = () => {
                         <td>
                           <Link to="#">
                             <p className="mb-4 md:ml-4 text-midColor font-semibold">
-                              {data.subtotal}
+                              {intToRupiah(data.subtotal)}
                             </p>
                           </Link>
                         </td>
@@ -259,7 +260,7 @@ const OrderDetailsPage = () => {
                         <td>
                           <Link to="#">
                             <p className="mb-4 md:ml-4 font-semibold text-red-600">
-                              -{data.discount}
+                              {(data.discount!==0)? `-${intToRupiah(data.discount)}` : intToRupiah(data.discount) }
                             </p>
                           </Link>
                         </td>
@@ -271,7 +272,7 @@ const OrderDetailsPage = () => {
                         <td>
                           <Link to="#">
                             <p className="mb-4 md:ml-4 font-semibold text-accentColor">
-                              {data.tax}
+                              {intToRupiah(data.tax)}
                             </p>
                           </Link>
                         </td>
