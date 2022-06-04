@@ -1,15 +1,16 @@
 import React from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-const OrderTable = () => {
+const OrderTable = (props) => {
   const navigate = useNavigate();
+  const data = props.data;
   return (
     <div>
       <table className="w-full text-sm lg:text-base" cellSpacing="0">
         <thead>
           <tr className="h-12 uppercase">
             <th className="text-left">No</th>
-            <th className="text-left">Order Number</th>
+            <th className="text-left">Transaction</th>
             <th className="lg:text-right text-left pl-5 lg:pl-0">
               <span className="lg:hidden" title="Quantity">
                 Date
@@ -23,282 +24,67 @@ const OrderTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="border" onClick={() => navigate("/user/orderDetail")}>
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">1</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-1-20220530</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">30/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">10000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor ">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
-          <tr className="border border-1">
-            <td className="hidden pb-4 md:table-cell p-2">
-              <Link to="#">
-                <p className="md:table-cell">2</p>
-              </Link>
-            </td>
-            <td>
-              <Link to="#">
-                <p className="mb-2 text-darkColor font-bold">ORG-2-20220531</p>
-              </Link>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">31/05/2022</span>
-            </td>
-            <td className="text-right md:table-cell pb-3">
-              <span className="text-sm lg:text-base font-medium">40000</span>
-            </td>
-            <td className="text-right md:table-cell pb-3 p-2">
-              <span className="text-sm lg:text-base font-bold text-darkColor">
-                Paid
-              </span>
-            </td>
-          </tr>
+          {data
+            ? data.map((order, index) => {
+                return (
+                  <tr
+                    className="border"
+                    key={index}
+                    onClick={() => navigate("/user/orderDetail/" + order.id)}
+                  >
+                    <td className="hidden pb-4 md:table-cell p-2">
+                      <Link to="#">
+                        <p className="md:table-cell">{index + 1}</p>
+                      </Link>
+                    </td>
+                    {order.status === "unpaid" ? (
+                      <td className="text-left md:table-cell pb-3 p-2">
+                        <span className="text-sm lg:text-base font-bold text-darkColor ">
+                          UNPAID
+                        </span>
+                      </td>
+                    ) : order.status === "ready to collect" ? (
+                      <td className="text-left md:table-cell pb-3 p-2">
+                        <span className="text-sm lg:text-base font-bold text-darkColor ">
+                          READY TO COLLECT
+                        </span>
+                      </td>
+                    ) : order.status === "cancelled" ? (
+                      <td className="text-left md:table-cell pb-3 p-2">
+                        <span className="text-sm lg:text-base font-bold text-darkColor ">
+                          CANCELLED
+                        </span>
+                      </td>
+                    ) : (
+                      <></>
+                    )}
+                    <td className="text-right md:table-cell pb-3">
+                      <span className="text-sm lg:text-base font-medium">
+                        {String(order.createdAt).slice(0, 10)}
+                      </span>
+                    </td>
+                    <td className="text-right md:table-cell pb-3">
+                      <span className="text-sm lg:text-base font-medium">
+                        {order.totalDue}
+                      </span>
+                    </td>
+                    {order.status !== null ? (
+                      <td className="text-right md:table-cell pb-3 p-2">
+                        <span className="text-sm lg:text-base font-bold text-darkColor ">
+                          {order.status.toUpperCase()}
+                        </span>
+                      </td>
+                    ) : (
+                      <td className="text-right md:table-cell pb-3 p-2">
+                        <span className="text-sm lg:text-base font-bold text-darkColor ">
+                          UNPAID
+                        </span>
+                      </td>
+                    )}
+                  </tr>
+                );
+              })
+            : console.log(data)}
         </tbody>
       </table>
     </div>

@@ -7,6 +7,7 @@ import {
   ProfileUser,
   ProductDetailsUser,
   OrdersPage,
+  FilteredOrdersPage,
   OrderDetailsPage,
 } from "../pages/User";
 
@@ -20,7 +21,8 @@ function AfterLoginRoutes() {
       <Route path="/profile" element={<ProfileUser />}></Route>
       <Route path="/details/:id" element={<ProductDetailsUser />}></Route>
       <Route path="/orders" element={<OrdersPage />}></Route>
-      {/* <Route path="/orderDetail/:id" element={<OrderDetailsPage />}></Route> */}
+      <Route path="/orders/:query" element={<FilteredOrdersPage />}></Route>
+      <Route path="/orderDetail/:id" element={<OrderDetailsPage />}></Route>
     </Routes>
   );
 }

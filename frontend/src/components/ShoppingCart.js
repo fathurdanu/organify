@@ -7,22 +7,30 @@ import AfterLoginRoutes from "../Routes/AfterLoginRoutes";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Swal from "sweetalert2";
-import { getCartByUserId, checkout, editLineItem, deleteLineItem } from "../actions/shoppingAction";
+import {
+  getCartByUserId,
+  checkout,
+  editLineItem,
+  deleteLineItem,
+} from "../actions/shoppingAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const ShoppingCart = () => {
-  const { action, status, data } = useSelector((state) => state.shoppingReducer);
+  const { action, status, data } = useSelector(
+    (state) => state.shoppingReducer
+  );
   const navigate = useNavigate();
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!localStorage.getItem("access_token")) navigate('/login');
+    if (!localStorage.getItem("access_token")) navigate("/login");
     dispatch(getCartByUserId());
   }, []);
 
   useEffect(() => {
-    if (action === "CHECKOUT" && status === "data") navigate("/user/checkout/" + data.id);
+    if (action === "CHECKOUT" && status === "data")
+      navigate("/user/orderDetail/" + data.id);
   }, [status]);
 
   async function editQty(id) {
@@ -39,7 +47,7 @@ const ShoppingCart = () => {
       console.log(typeof qty);
       dispatch(editLineItem(id, { qty: +qty })).then(() => {
         dispatch(getCartByUserId());
-      })
+      });
     }
   }
 
@@ -55,32 +63,32 @@ const ShoppingCart = () => {
       if (result.isConfirmed) {
         dispatch(deleteLineItem(id)).then(() => {
           dispatch(getCartByUserId());
-        })
+        });
       }
     });
   }
 
-
   const checkoutHandling = () => {
     Swal.fire({
-      title: 'Are you sure want to checkout?',
-      icon: 'warning',
+      title: "Are you sure want to checkout?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(checkout())
+        dispatch(checkout());
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="flex">
       <aside
-        className={`flex transform top-0 left-0 w-80 fixed h-screen overflow-auto ease-in-out transition-all duration-300 z-[3] ${showCart ? "translate-x-0" : "-translate-x-3/4"
-          } `}
+        className={`flex transform top-0 left-0 w-80 fixed h-screen overflow-auto ease-in-out transition-all duration-300 z-[3] ${
+          showCart ? "translate-x-0" : "-translate-x-3/4"
+        } `}
       >
         <div className="justify-between border-r-4 border-lightColor pt-6 w-3/4 bg-darkColor">
           <div>
@@ -93,14 +101,18 @@ const ShoppingCart = () => {
           </div>
           <div className="mx-auto flex">
             <ul className="my-2">
-              {(action === "GET_CART_BY_USER_ID" && status === 'data' && data !== "loading") ?
+              {action === "GET_CART_BY_USER_ID" &&
+              status === "data" &&
+              data !== "loading" ? (
                 data.lineItems.map((lineItem, index) => {
                   return (
                     <div key={index}>
                       <li className="my-2 flex">
                         <button className="flex items-center px-4 py-2 text-lightColor bg-darkColor">
                           <GiFruitBowl size={25} />
-                          <span className="mx-4 font-medium">{lineItem.Product.name}</span>
+                          <span className="mx-4 font-medium">
+                            {lineItem.Product.name}
+                          </span>
                           <span className="font-medium">{lineItem.qty}</span>
                         </button>
 
@@ -117,13 +129,12 @@ const ShoppingCart = () => {
                           <BsFillTrashFill />
                         </button>
                       </li>
-
                     </div>
-                  )
-                }
-                )
-                : <></>
-              }
+                  );
+                })
+              ) : (
+                <></>
+              )}
               <li className="my-2 w-3/4 absolute left-12 bottom-5">
                 <button
                   className="flex bg-lightColor items-center px-4 py-2 text-darkColor hover:bg-white rounded-md"
