@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: {
             msg: "Stock must not be empty",
           },
-          min: 1,
+          min: 0,
         },
       },
       expire: DataTypes.DATE,
