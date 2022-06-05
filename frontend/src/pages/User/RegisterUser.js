@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BiPencil } from "react-icons/bi";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../actions/userActions';
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/userActions";
 
 function RegisterUser() {
-  const { action, status, data } = useSelector(state => state.userReducer)
+  const { action, status, data } = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,6 +19,12 @@ function RegisterUser() {
     avatar: null,
   });
 
+  useEffect(() => {
+    if (action === "REGISTER" && status === "data") {
+      navigate("/login");
+    }
+  }, [data, dispatch]);
+
   const registerHandler = () => {
     let formData = new FormData();
     formData.append("username", form.username);
@@ -29,7 +35,7 @@ function RegisterUser() {
     formData.append("avatar", form.avatar);
     formData.append("type", "user");
     dispatch(register(formData));
-  }
+  };
 
   return (
     <div className="mx-auto lg:w-2/5 md:w-3/5 sm:w-96 bg-white rounded-md">
@@ -40,14 +46,30 @@ function RegisterUser() {
         <hr className="border-green-800 mx-5" />
         <div className="px-5 py-5">
           <div className="mx-auto my-5 w-40 h-40 bg-white border-4 border-darkColor relative rounded-full flex justify-center items-center">
-            <label className="cursor-pointer custom-file-upload" htmlFor="file-upload">
+            <label
+              className="cursor-pointer custom-file-upload"
+              htmlFor="file-upload"
+            >
               <img
                 className="mx-auto object-cover w-36 h-36 rounded-full"
-                src={form.avatar ? URL.createObjectURL(form.avatar) : "https://www.w3schools.com/howto/img_avatar.png"}
+                src={
+                  form.avatar
+                    ? URL.createObjectURL(form.avatar)
+                    : "https://www.w3schools.com/howto/img_avatar.png"
+                }
                 alt="Profile Picture"
               />
             </label>
-            <input className="hidden" id="file-upload" type="file" name='image' accept="image" onChange={(e) => { setForm({ ...form, avatar: e.target.files[0] }) }} />
+            <input
+              className="hidden"
+              id="file-upload"
+              type="file"
+              name="image"
+              accept="image"
+              onChange={(e) => {
+                setForm({ ...form, avatar: e.target.files[0] });
+              }}
+            />
             <div className=" bg-darkColor rounded-full absolute top-0 left-0 px-2 py-2">
               <div className="text-2xl text-lightColor">
                 <BiPencil />
@@ -121,7 +143,7 @@ function RegisterUser() {
             Register
           </button>
           <h1 className="text-md mt-2 text-center">
-            Sign up as Admin ?, Click{" "}
+            Already have an account ?, Click{" "}
             <button
               className="font-bold text-darkColor"
               onClick={() => navigate("/registerCMS")}

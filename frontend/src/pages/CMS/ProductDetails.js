@@ -13,13 +13,15 @@ import "swiper/css";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/cmsActions";
 
+import base_url from "../../helpers/base_url";
+
 const ProductDetails = () => {
   const { action, status, data } = useSelector((state) => state.cmsReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const id = Number(useParams().id);
-  const url = "http://localhost:3000";
+  const url = base_url;
 
   useEffect(() => {
     dispatch(getProductById(id));
@@ -54,12 +56,12 @@ const ProductDetails = () => {
             >
               {action === "GET_PRODUCT_BY_ID" && data !== "loading"
                 ? data.ProductImages.map((img, index) => {
-                  return (
+                    return (
                       <SwiperSlide key={index}>
                         <img src={`${url}/images/${img.filename}`}></img>
                       </SwiperSlide>
-                  );
-                })
+                    );
+                  })
                 : "Loading"}
             </Swiper>
             <div className="px-6">
@@ -123,12 +125,12 @@ const ProductDetails = () => {
                   <div className="flex py-1">
                     {data.rating !== 0 && data.rating !== null
                       ? [...Array(data.rating)].map((x, i) => (
-                        <BsFillStarFill
-                          key={i}
-                          className="text-accentColor"
-                          size={20}
-                        />
-                      ))
+                          <BsFillStarFill
+                            key={i}
+                            className="text-accentColor"
+                            size={20}
+                          />
+                        ))
                       : "No ratings given"}
                   </div>
                 </div>

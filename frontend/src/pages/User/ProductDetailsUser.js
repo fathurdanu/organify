@@ -12,9 +12,15 @@ import "swiper/css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/cmsActions";
-import { addToCart, getCartByUserId, addViews } from "../../actions/shoppingAction";
+import {
+  addToCart,
+  getCartByUserId,
+  addViews,
+} from "../../actions/shoppingAction";
 
 import Swal from "sweetalert2";
+
+import base_url from "../../helpers/base_url";
 
 const ProductDetailsUser = () => {
   const { action, status, data } = useSelector((state) => state.cmsReducer);
@@ -22,7 +28,7 @@ const ProductDetailsUser = () => {
   const dispatch = useDispatch();
 
   const id = Number(useParams().id);
-  const url = "http://localhost:3000";
+  const url = base_url;
 
   useEffect(() => {
     dispatch(addViews(id));
@@ -38,18 +44,29 @@ const ProductDetailsUser = () => {
       confirmButtonColor: "#0B4619",
     });
 
-    if (qty) {
-      dispatch(addToCart(
-        {
+    if (qty > 1 && qty < data.stock) {
+      dispatch(
+        addToCart({
           ProductId: id,
-          qty: qty
-        }
-      )).then(() => {
+          qty: qty,
+        })
+      ).then(() => {
         dispatch(getCartByUserId());
-      })
+      });
+    } else if (qty < 1) {
+      Swal.fire(
+        "Add to Cart Error",
+        "Quantity must be a positive integer!",
+        "error"
+      );
+    } else if (qty > data.stock) {
+      Swal.fire(
+        "Add to Cart Error",
+        "Quantity must not be higher than the Product Stock!",
+        "error"
+      );
     }
   }
-
 
   return (
     <div>
@@ -74,12 +91,12 @@ const ProductDetailsUser = () => {
             >
               {action === "GET_PRODUCT_BY_ID" && data !== "loading"
                 ? data.ProductImages.map((img, index) => {
-                  return (
-                    <SwiperSlide key={index}>
-                      <img src={`${url}/images/${img.filename}`}></img>
-                    </SwiperSlide>
-                  );
-                })
+                    return (
+                      <SwiperSlide key={index}>
+                        <img src={`${url}/images/${img.filename}`}></img>
+                      </SwiperSlide>
+                    );
+                  })
                 : "Loading"}
             </Swiper>
             <div className="px-6">
@@ -103,7 +120,9 @@ const ProductDetailsUser = () => {
                 <button
                   className="bg-darkColor text-lightColor p-2 font-semibold rounded-md"
                   onClick={() => inputQty()}
-                >Add To Cart</button>
+                >
+                  Add To Cart
+                </button>
               </div>
             </div>
           </div>
@@ -149,12 +168,12 @@ const ProductDetailsUser = () => {
                   <div className="flex py-1">
                     {data.rating !== 0 && data.rating !== null
                       ? [...Array(data.rating)].map((x, i) => (
-                        <BsFillStarFill
-                          key={i}
-                          className="text-accentColor"
-                          size={20}
-                        />
-                      ))
+                          <BsFillStarFill
+                            key={i}
+                            className="text-accentColor"
+                            size={20}
+                          />
+                        ))
                       : "No ratings given"}
                   </div>
                 </div>

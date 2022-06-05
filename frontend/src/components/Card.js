@@ -1,14 +1,14 @@
-
 import React from "react";
 // import { useNavigate } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
-import intToRupiah from "../helpers/rupiah"
+import intToRupiah from "../helpers/rupiah";
+import base_url from "../helpers/base_url";
 
 function Card(props) {
   // const [showOptions, setShowOptions] = useState(false);
   // const navigate = useNavigate();
   const data = props.product;
-  const url = "http://localhost:3000";
+  const url = base_url;
   return (
     <div>
       <div className="w-48 h-80 bg-lightColor rounded-md shadow-sm shadow-neutral-500 hover:shadow-inner hover:inner cursor-pointer mx-auto">
@@ -27,7 +27,7 @@ function Card(props) {
           <div className="flex grid-cols-5">
             <div className="flex col-span-2 w-12">
               <p className="text-accentColor inline text-2xl">
-                <AiFillStar/>
+                <AiFillStar />
               </p>
               <p className="inline">{data.rating}</p>
             </div>

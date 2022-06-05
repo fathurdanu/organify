@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { update, getProductById } from "../../actions/cmsActions";
 
-const url = "http://localhost:3000";
+import base_url from "../../helpers/base_url";
 
 function EditProduct() {
   const { action, status, data } = useSelector((state) => state.cmsReducer);
@@ -12,6 +12,7 @@ function EditProduct() {
   const dispatch = useDispatch();
 
   const id = Number(useParams().id);
+  const url = base_url;
 
   const [form, setForm] = useState({
     name: "",
@@ -25,7 +26,6 @@ function EditProduct() {
     condition: "",
   });
 
-
   useEffect(() => {
     if (action === "GET_PRODUCT_BY_ID" && status === "data") {
       setForm({
@@ -33,7 +33,7 @@ function EditProduct() {
         desc: data.desc,
         price: data.price,
         stock: data.stock,
-        expire: data.expire?data.expire.split('T')[0]:"",
+        expire: data.expire ? data.expire.split("T")[0] : "",
         weight: data.weight,
         unit: data.unit,
         category: data.category,
@@ -44,6 +44,12 @@ function EditProduct() {
     //   dispatch(getUser());
     // }
   }, [data, dispatch]);
+
+  useEffect(() => {
+    if (action === "UPDATE" && status === "data") {
+      navigate(`/cms/details/${id}`);
+    }
+  });
 
   const [images, setImages] = useState();
 
@@ -95,16 +101,16 @@ function EditProduct() {
                       className="cursor-pointer custom-file-upload"
                       htmlFor="file-upload"
                     > */}
-                      <div className="text-7xl">
-                        <img
-                          className="w-32 h-32 object-cover"
-                          src={
-                            img
-                              ? url + "/images/" + img.filename
-                              : "https://www.w3schools.com/howto/img_avatar.png"
-                          }
-                        />
-                      </div>
+                    <div className="text-7xl">
+                      <img
+                        className="w-32 h-32 object-cover"
+                        src={
+                          img
+                            ? url + "/images/" + img.filename
+                            : "https://www.w3schools.com/howto/img_avatar.png"
+                        }
+                      />
+                    </div>
                     {/* </label>
                     <input
                       className="hidden"
@@ -132,7 +138,7 @@ function EditProduct() {
             type="text"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-full"
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            value={form.name||""}
+            value={form.name || ""}
           ></input>
         </div>
         <div className="px-5 py-2">
@@ -143,7 +149,7 @@ function EditProduct() {
             rows="4"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-full"
             onChange={(e) => setForm({ ...form, desc: e.target.value })}
-            value={form.desc||""}
+            value={form.desc || ""}
           ></textarea>
         </div>
         <div className="px-5 py-2">
@@ -154,7 +160,7 @@ function EditProduct() {
             type="number"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-full"
             onChange={(e) => setForm({ ...form, price: e.target.value })}
-            value={form.price||""}
+            value={form.price || ""}
           ></input>
         </div>
         <div className="px-5 py-2">
@@ -165,7 +171,7 @@ function EditProduct() {
             type="number"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-full"
             onChange={(e) => setForm({ ...form, stock: e.target.value })}
-            value={form.stock||""}
+            value={form.stock || ""}
           ></input>
         </div>
         <div className="px-5 py-2">
@@ -176,7 +182,7 @@ function EditProduct() {
             type="date"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-2/5"
             onChange={(e) => setForm({ ...form, expire: e.target.value })}
-            value={form.expire||""}
+            value={form.expire || ""}
           ></input>
         </div>
         <div className="px-5 py-2">
@@ -187,7 +193,7 @@ function EditProduct() {
             type="number"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-full"
             onChange={(e) => setForm({ ...form, weight: e.target.value })}
-            value={form.weight||""}
+            value={form.weight || ""}
           ></input>
         </div>
         <div className="px-5 py-2">
@@ -198,7 +204,7 @@ function EditProduct() {
             type="text"
             className="border hover:border-green-800 focus:border-darkColor p-2 rounded-md bg-lightColor w-full"
             onChange={(e) => setForm({ ...form, unit: e.target.value })}
-            value={form.unit||""}
+            value={form.unit || ""}
           ></input>
         </div>
         <div className="px-5 py-2">

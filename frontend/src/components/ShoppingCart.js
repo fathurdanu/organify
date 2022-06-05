@@ -135,14 +135,27 @@ const ShoppingCart = () => {
               ) : (
                 <></>
               )}
-              <li className="my-2 w-3/4 absolute left-12 bottom-5">
-                <button
-                  className="flex bg-lightColor items-center px-4 py-2 text-darkColor hover:bg-white rounded-md"
-                  onClick={() => checkoutHandling()}
-                >
-                  <span className="mx-4 font-medium">Checkout</span>
-                </button>
-              </li>
+              {action === "GET_CART_BY_USER_ID" &&
+              status === "data" &&
+              data !== "loading" &&
+              data.lineItems.length !== 0 ? (
+                <li className="my-2 w-3/4 absolute left-12 bottom-5">
+                  <button
+                    className="flex bg-lightColor items-center px-4 py-2 text-darkColor hover:bg-white rounded-md"
+                    onClick={() => checkoutHandling()}
+                  >
+                    <span className="mx-4 font-medium">Checkout</span>
+                  </button>
+                </li>
+              ) : (
+                <li className="my-2 w-3/4 absolute left-4 bottom-5">
+                  <button className="flex bg-lightColor items-left  py-2 text-darkColor hover:bg-white rounded-md">
+                    <span className="mx-4 font-medium">
+                      Your Cart is Still Empty!
+                    </span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>

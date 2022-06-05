@@ -38,6 +38,7 @@ const OrderDetailsPage = () => {
       right: 0,
       bottom: 0,
       backgroundColor: "rgba(55, 49, 52, 0.5)",
+      zIndex: 1000,
     },
     content: {
       top: "50%",
@@ -56,7 +57,7 @@ const OrderDetailsPage = () => {
 
   function closeModal() {
     setOpenModal(false);
-    dispatch(updatePayment()).then(() => {
+    dispatch(updatePayment(id)).then(() => {
       dispatch(getOrder(id));
     });
   }
@@ -260,7 +261,9 @@ const OrderDetailsPage = () => {
                         <td>
                           <Link to="#">
                             <p className="mb-4 md:ml-4 font-semibold text-red-600">
-                              {(data.discount!==0)? `-${intToRupiah(data.discount)}` : intToRupiah(data.discount) }
+                              {data.discount !== 0
+                                ? `-${intToRupiah(data.discount)}`
+                                : intToRupiah(data.discount)}
                             </p>
                           </Link>
                         </td>

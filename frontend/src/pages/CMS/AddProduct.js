@@ -4,10 +4,10 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { BiPencil } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 import { useDispatch, useSelector } from "react-redux";
 import { create } from "../../actions/cmsActions";
-
-const url = "http://localhost:3000";
 
 function AddProduct() {
   const { action, status, data } = useSelector((state) => state.cmsReducer);
@@ -48,17 +48,15 @@ function AddProduct() {
     dispatch(create(formData));
   };
 
-
   useEffect(() => {
     if (action === "CREATE" && status === "data") {
       navigate("/cms/dashboard");
     }
-  }, [data])
-
+  }, [data]);
 
   const addImagesHandler = (files) => {
-    setImages([...images, ...files])
-  }
+    setImages([...images, ...files]);
+  };
 
   return (
     <div className="mx-auto lg:w-2/5 md:w-3/5 sm:w-96 bg-white rounded-md overflow-scroll max-h-screen py-5 no-scrollbar">
@@ -68,11 +66,9 @@ function AddProduct() {
         </div>
         <hr className="border-green-800 mx-5" />
         <div className="px-5 py-5">
-
           <div className="overflow-x-scroll flex space-x-8">
-            {
-            images !== undefined ? (
-              Array.from(images).map((img,index) => {
+            {images !== undefined ? (
+              Array.from(images).map((img, index) => {
                 return (
                   <div
                     className="flex-shrink-0 my-5 w-36 h-36 bg-gray-100 shadow-gray-600 shadow-md text-gray-500 p-2 rounded-md cursor-pointer"
@@ -100,7 +96,9 @@ function AddProduct() {
                       accept="image/*"
                       name="filename"
                       id="file-upload"
-                      onChange={(e) => setImages([...images, ...e.target.files])}
+                      onChange={(e) =>
+                        setImages([...images, ...e.target.files])
+                      }
                     />
                   </div>
                 );
@@ -132,10 +130,7 @@ function AddProduct() {
                 onChange={(e) => addImagesHandler(e.target.files)}
               />
             </div>
-
           </div>
-
-
         </div>
 
         <div className="px-5 py-2">

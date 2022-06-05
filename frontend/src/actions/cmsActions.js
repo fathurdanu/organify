@@ -1,6 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-const url = "http://localhost:3000/products";
+
+import base_url from "../helpers/base_url";
+
+const url = base_url + "/products";
 
 export const getAllProducts = () => {
   return (dispatch) => {
@@ -112,7 +115,12 @@ export const create = (data) => {
         });
       })
       //error
-      .catch((error) => {
+      .catch(async (error) => {
+        await Swal.fire(
+          "Add Product Failed",
+          "Please input only positive numbers",
+          "error"
+        );
         dispatch({
           type: "CREATE",
           payload: {
