@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import logo from "../assets/images/logo.png";
+import logoLight from "../assets/images/logoLight.png";
 import Swal from "sweetalert2";
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
       <div className="container flex py-3 mx-auto border-0">
         <div className="w-2/12 lg:h-20 flex justify-center items-center">
           <Link to="/user/home" className="text-2xl text-white font-semibold">
-            <img alt="" className="h-20" src={logo} />
+            <img alt="" className="h-20" src={logoLight} />
           </Link>
         </div>
         <div className="w-4/12 flex justify-center items-center">

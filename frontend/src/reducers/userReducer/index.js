@@ -34,6 +34,13 @@ const userReducer = (state = initialState, { type, payload }) => {
                 status: payload.status,
                 data: payload.data
             }
+        case "CLEAR":
+            return {
+                ...state,
+                action: "CLEAR",
+                status: payload.status,
+                data: payload.data
+            }
         default:
             return state;
     }

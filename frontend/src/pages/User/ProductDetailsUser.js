@@ -18,6 +18,8 @@ import {
   addViews,
 } from "../../actions/shoppingAction";
 
+import intToRupiah from "../../helpers/rupiah";
+
 import Swal from "sweetalert2";
 
 import base_url from "../../helpers/base_url";
@@ -98,9 +100,10 @@ const ProductDetailsUser = () => {
               <div className="font-bold text-xl my-2">{data.name}</div>
               <p className="text-gray-700 text-md my-3">{data.desc}</p>
               <div className="flex py-1">
-                <BsCurrencyDollar className="mt-1 mr-3" size={20} />
+                {/* <BsCurrencyDollar className="mt-1 mr-3" size={20} /> */}
+                Rp
                 <p className="text-midColor font-semibold text-md pr-1">
-                  {data.price}
+                  {intToRupiah(data.price)}
                 </p>
                 <p>/ {data.weight} gr</p>
               </div>

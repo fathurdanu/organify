@@ -248,7 +248,7 @@ const OrderDetailsPage = () => {
                         </td>
                         <td>
                           <Link to="#">
-                            <p className="mb-4 md:ml-4 text-midColor font-semibold">
+                            <p className="mb-4 md:ml-4 text-midColor font-semibold text-right">
                               {intToRupiah(data.subtotal)}
                             </p>
                           </Link>
@@ -260,7 +260,7 @@ const OrderDetailsPage = () => {
                         </td>
                         <td>
                           <Link to="#">
-                            <p className="mb-4 md:ml-4 font-semibold text-red-600">
+                            <p className="mb-4 md:ml-4 font-semibold text-red-600 text-right">
                               {data.discount !== 0
                                 ? `-${intToRupiah(data.discount)}`
                                 : intToRupiah(data.discount)}
@@ -274,7 +274,7 @@ const OrderDetailsPage = () => {
                         </td>
                         <td>
                           <Link to="#">
-                            <p className="mb-4 md:ml-4 font-semibold text-accentColor">
+                            <p className="mb-4 md:ml-4 font-semibold text-accentColor text-right">
                               {intToRupiah(data.tax)}
                             </p>
                           </Link>
@@ -286,8 +286,8 @@ const OrderDetailsPage = () => {
                         </td>
                         <td>
                           <Link to="#">
-                            <p className="mb-4 md:ml-4 font-bold text-midColor">
-                              {data.totalDue}
+                            <p className="mb-4 md:ml-4 font-bold text-midColor text-right">
+                              {intToRupiah(data.totalDue)}
                             </p>
                           </Link>
                         </td>

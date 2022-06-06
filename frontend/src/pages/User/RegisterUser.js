@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { BiPencil } from "react-icons/bi";
+import Swal from 'sweetalert2'
 
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../actions/userActions";
+import { register, clear } from "../../actions/userActions";
 
 function RegisterUser() {
   const { action, status, data } = useSelector((state) => state.userReducer);
@@ -19,11 +20,18 @@ function RegisterUser() {
     avatar: null,
   });
 
+
+  useEffect(() => {
+    console.log(`${action} | ${status}`);
+  }, [status])
+
   useEffect(() => {
     if (action === "REGISTER" && status === "data") {
-      navigate("/login");
+      dispatch(clear()).then(() => {
+        navigate(`/login`);
+      })
     }
-  }, [data, dispatch]);
+  }, [status]);
 
   const registerHandler = () => {
     let formData = new FormData();
@@ -35,8 +43,7 @@ function RegisterUser() {
     formData.append("avatar", form.avatar);
     formData.append("type", "user");
     dispatch(register(formData));
-  };
-
+  }
   return (
     <div className="mx-auto lg:w-2/5 md:w-3/5 sm:w-96 bg-white rounded-md">
       <div className="p-5">

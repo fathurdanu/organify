@@ -53,6 +53,19 @@ export const register = (data) => {
     }
 }
 
+
+export const clear = (data) => {
+    return async (dispatch) => {
+        dispatch({
+            type: "CLEAR",
+            payload: {
+                status: 'empty',
+                data: 'Empty'
+            }
+        })
+    }
+}
+
 export const login = (data) => {
     return (dispatch) => {
         // Loading
